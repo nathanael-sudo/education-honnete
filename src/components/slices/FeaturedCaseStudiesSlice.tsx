@@ -1,30 +1,23 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import * as prismic from '@prismicio/client'
-
-type CaseStudyData = {
-  dog_name: prismic.KeyTextField
-  dog_breed: prismic.KeyTextField
-  dog_portrait: prismic.ImageField
-  location: prismic.KeyTextField
-}
-
-type CaseStudyLink = prismic.FilledContentRelationshipField<'case_study', 'en-us', CaseStudyData>
+import { createClient } from '@/prismicio'
 
 type FeaturedCaseStudiesSlice = {
   slice_type: 'featured_case_studies'
   variation: 'default'
-  primary: {
-    title: prismic.KeyTextField
-  }
-  items: { case_study: prismic.LinkField }[]
+  primary: { title: prismic.KeyTextField }
+  items: unknown[]
 }
 
-export default function FeaturedCaseStudiesSlice({ slice }: { slice: FeaturedCaseStudiesSlice }) {
+export default async function FeaturedCaseStudiesSlice({ slice }: { slice: FeaturedCaseStudiesSlice }) {
   const { title } = slice.primary
-  const caseStudies = slice.items
-    .map((item) => item.case_study as prismic.ContentRelationshipField)
-    .filter((cs): cs is CaseStudyLink => prismic.isFilled.contentRelationship(cs))
+
+  const client = createClient()
+  const caseStudies = await client.getAllByType('case_study', {
+    limit: 3,
+    orderings: [{ field: 'document.last_publication_date', direction: 'desc' }],
+  })
 
   return (
     <section className="py-20 bg-white">
@@ -38,9 +31,8 @@ export default function FeaturedCaseStudiesSlice({ slice }: { slice: FeaturedCas
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {caseStudies.map((cs) => {
-            const data = cs.data
-            const imgUrl = data?.dog_portrait && prismic.isFilled.image(data.dog_portrait)
-              ? data.dog_portrait.url
+            const imgUrl = prismic.isFilled.image(cs.data.dog_portrait)
+              ? cs.data.dog_portrait.url
               : null
 
             return (
@@ -53,7 +45,7 @@ export default function FeaturedCaseStudiesSlice({ slice }: { slice: FeaturedCas
                   {imgUrl ? (
                     <Image
                       src={imgUrl}
-                      alt={data?.dog_name ?? ''}
+                      alt={cs.data.dog_name ?? ''}
                       fill
                       className="object-cover group-hover:scale-105 transition-transform duration-500"
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
@@ -64,17 +56,17 @@ export default function FeaturedCaseStudiesSlice({ slice }: { slice: FeaturedCas
                 </div>
                 <div className="p-5">
                   <p className="text-xs font-semibold text-amber-warm uppercase tracking-wider mb-1">
-                    {data?.dog_breed}
+                    {cs.data.dog_breed}
                   </p>
                   <h3 className="text-xl font-serif font-bold text-forest-800 group-hover:text-forest-600 transition-colors">
-                    {data?.dog_name}
+                    {cs.data.dog_name}
                   </h3>
-                  {data?.location && (
+                  {cs.data.location && (
                     <p className="text-sm text-gray-500 mt-1 flex items-center gap-1">
                       <svg className="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z" />
                       </svg>
-                      {data.location}
+                      {cs.data.location}
                     </p>
                   )}
                   <div className="mt-4 text-sm font-semibold text-forest-700 flex items-center gap-1">

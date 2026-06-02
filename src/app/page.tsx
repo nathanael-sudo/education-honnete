@@ -13,14 +13,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function HomePage() {
   const client = createClient()
-  const page = await client.getSingle('homepage', {
-    fetchLinks: [
-      'case_study.dog_name',
-      'case_study.dog_breed',
-      'case_study.dog_portrait',
-      'case_study.location',
-    ],
-  })
+  const page = await client.getSingle('homepage')
 
   return <SliceZone slices={page.data.slices} />
 }
