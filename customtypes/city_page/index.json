@@ -1,0 +1,103 @@
+{
+  "id": "city_page",
+  "label": "City Page",
+  "repeatable": true,
+  "status": true,
+  "format": "page",
+  "json": {
+    "Main": {
+      "uid": {
+        "type": "UID",
+        "config": {
+          "label": "UID"
+        }
+      },
+      "slices": {
+        "type": "Slices",
+        "fieldset": "Slice Zone",
+        "config": {
+          "choices": {}
+        }
+      },
+      "city_name": {
+        "type": "Text",
+        "config": {
+          "label": "City Name"
+        }
+      },
+      "city_slug": {
+        "type": "Text",
+        "config": {
+          "label": "City Slug"
+        }
+      },
+      "department": {
+        "type": "Text",
+        "config": {
+          "label": "Department"
+        }
+      },
+      "region": {
+        "type": "Text",
+        "config": {
+          "label": "Region"
+        }
+      },
+      "hero_title": {
+        "type": "StructuredText",
+        "config": {
+          "label": "Hero Title",
+          "single": "heading1"
+        }
+      },
+      "hero_description": {
+        "type": "StructuredText",
+        "config": {
+          "label": "Hero Description",
+          "multi": "paragraph,strong,em"
+        }
+      },
+      "local_context": {
+        "type": "StructuredText",
+        "config": {
+          "label": "Local Context",
+          "multi": "paragraph,strong,em,list-item"
+        }
+      },
+      "services_intro": {
+        "type": "StructuredText",
+        "config": {
+          "label": "Services Intro",
+          "multi": "paragraph,strong,em,list-item"
+        }
+      }
+    },
+    "SEO & Metadata": {
+      "meta_title": {
+        "type": "Text",
+        "config": {
+          "label": "Meta Title",
+          "placeholder": "A title of the page used for social media and search engines"
+        }
+      },
+      "meta_description": {
+        "type": "Text",
+        "config": {
+          "label": "Meta Description",
+          "placeholder": "A brief summary of the page"
+        }
+      },
+      "meta_image": {
+        "type": "Image",
+        "config": {
+          "label": "Meta Image",
+          "constraint": {
+            "width": 2400,
+            "height": 1260
+          },
+          "thumbnails": []
+        }
+      }
+    }
+  }
+}

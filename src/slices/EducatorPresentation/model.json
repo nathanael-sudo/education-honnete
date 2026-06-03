@@ -1,0 +1,90 @@
+{
+  "id": "educator_presentation",
+  "type": "SharedSlice",
+  "name": "EducatorPresentation",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "description": "Default",
+      "imageUrl": "",
+      "docURL": "...",
+      "version": "initial",
+      "primary": {
+        "educator_image": {
+          "type": "Image",
+          "config": {
+            "label": "Educator Image",
+            "constraint": {},
+            "thumbnails": []
+          }
+        },
+        "eyebrow": {
+          "type": "Text",
+          "config": {
+            "label": "Eyebrow",
+            "placeholder": "e.g., Votre Éducatrice"
+          }
+        },
+        "name": {
+          "type": "StructuredText",
+          "config": {
+            "label": "Name",
+            "placeholder": "",
+            "single": "heading2",
+            "allowTargetBlank": true
+          }
+        },
+        "description": {
+          "type": "StructuredText",
+          "config": {
+            "label": "Description",
+            "placeholder": "",
+            "multi": "paragraph,strong,em,hyperlink,list-item,o-list-item",
+            "allowTargetBlank": true
+          }
+        },
+        "locations": {
+          "type": "Text",
+          "config": {
+            "label": "Locations",
+            "placeholder": "e.g., Secteur Lavaltrie, Repentigny, L'Assomption..."
+          }
+        },
+        "google_reviews_label": {
+          "type": "Text",
+          "config": {
+            "label": "Google Reviews Label",
+            "placeholder": "e.g., Voir mes avis Google"
+          }
+        },
+        "google_reviews_link": {
+          "type": "Link",
+          "config": {
+            "label": "Google Reviews Link",
+            "placeholder": "",
+            "select": null,
+            "allowTargetBlank": true
+          }
+        }
+      },
+      "items": {
+        "figure": {
+          "type": "Text",
+          "config": {
+            "label": "Figure",
+            "placeholder": "e.g., 100+"
+          }
+        },
+        "label": {
+          "type": "Text",
+          "config": {
+            "label": "Label",
+            "placeholder": "e.g., Chiens accompagnés"
+          }
+        }
+      }
+    }
+  ],
+  "description": "EducatorPresentation"
+}

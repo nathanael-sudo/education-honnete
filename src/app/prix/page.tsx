@@ -1,15 +1,27 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
+import Script from 'next/script'
 import * as prismic from '@prismicio/client'
 import { PrismicRichText } from '@prismicio/react'
-import { createClient } from '@/prismicio'
+import { createClient, siteUrl } from '@/prismicio'
+import { serviceSchema } from '@/lib/structured-data'
+import FaqSection from '@/components/FaqSection'
 
 export async function generateMetadata(): Promise<Metadata> {
   const client = createClient()
   const page = await client.getSingle('pricing')
+  const pageUrl = `${siteUrl}/prix`
   return {
-    title: page.data.meta_title ?? 'Tarifs – Éducation Honnête',
-    description: page.data.meta_description ?? undefined,
+    title: 'Tarifs éducation canine Manche – Cours & Forfaits',
+    description:
+      page.data.meta_description ??
+      'Tarifs éducation canine Manche : 40€/séance, forfaits 5 ou 10 séances. Cours particuliers à domicile, frais de déplacement inclus secteur Granville/Coutances.',
+    alternates: { canonical: pageUrl },
+    openGraph: {
+      title: 'Tarifs éducation canine Manche – Cours & Forfaits | Éducation Honnête',
+      description: 'Séance à 40€, forfait 5 séances 190€, forfait 10 séances 370€. Frais de déplacement inclus sur Granville, Coutances, Bréhal.',
+      url: pageUrl,
+    },
   }
 }
 
@@ -21,6 +33,25 @@ function CheckIcon() {
   )
 }
 
+const PRIX_FAQ = [
+  {
+    q: 'Les frais de déplacement sont-ils inclus ?',
+    a: 'Oui, les frais de déplacement sont inclus pour tout le secteur Coutançais et Granvillais. Pour les zones plus éloignées, contactez-moi pour un devis personnalisé.',
+  },
+  {
+    q: "Les séances d'un forfait sont-elles valables combien de temps ?",
+    a: "Les séances d'un forfait sont valables 6 mois à partir de la date d'achat, pour vous laisser le temps de progresser à votre rythme.",
+  },
+  {
+    q: 'Comment se déroule la première séance ?',
+    a: "La première séance commence toujours par un bilan complet : histoire du chien, comportements problématiques, attentes du maître. Ensuite, on travaille directement avec le chien pour observer ses réactions. À la fin, vous repartez avec un plan d'action concret et des exercices à pratiquer au quotidien.",
+  },
+  {
+    q: "Proposez-vous des cours d'essai ?",
+    a: "Oui, vous pouvez réserver un cours d'essai individuel à 40€ pour voir si l'approche vous convient avant de vous engager dans un forfait.",
+  },
+]
+
 export default async function PrixPage() {
   const client = createClient()
   const page = await client.getSingle('pricing')
@@ -28,6 +59,12 @@ export default async function PrixPage() {
 
   return (
     <div className="bg-cream min-h-screen">
+      <Script
+        id="schema-service"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+      />
+
       {/* Header */}
       <div className="bg-forest-800 py-16 px-4 text-center">
         <p className="text-amber-warm font-semibold text-sm uppercase tracking-widest mb-3">Investissement</p>
@@ -130,6 +167,12 @@ export default async function PrixPage() {
           </svg>
         </Link>
       </div>
+
+      <FaqSection
+        title="Questions sur les tarifs"
+        items={PRIX_FAQ}
+        schemaId="schema-faq-prix"
+      />
     </div>
   )
 }

@@ -1,0 +1,83 @@
+{
+  "id": "pricing",
+  "label": "Pricing",
+  "repeatable": false,
+  "json": {
+    "Main": {
+      "title": {
+        "type": "Text",
+        "config": {
+          "label": "Title",
+          "placeholder": "Nos tarifs"
+        }
+      },
+      "description": {
+        "type": "StructuredText",
+        "config": {
+          "label": "Description",
+          "placeholder": "",
+          "multi": "paragraph,strong,em",
+          "allowTargetBlank": true
+        }
+      },
+      "plans": {
+        "type": "Group",
+        "config": {
+          "label": "Plans",
+          "fields": {
+            "plan_title": {
+              "type": "Text",
+              "config": {
+                "label": "Plan Title",
+                "placeholder": "Cours d'essai"
+              }
+            },
+            "plan_description": {
+              "type": "StructuredText",
+              "config": {
+                "label": "Plan Description",
+                "placeholder": "",
+                "multi": "paragraph,strong,em,list-item,o-list-item",
+                "allowTargetBlank": true
+              }
+            },
+            "plan_price": {
+              "type": "Text",
+              "config": {
+                "label": "Plan Price",
+                "placeholder": "60€"
+              }
+            },
+            "is_featured": {
+              "type": "Boolean",
+              "config": {
+                "label": "Is Featured",
+                "default_value": false,
+                "placeholder_true": "Yes",
+                "placeholder_false": "No"
+              }
+            }
+          }
+        }
+      }
+    },
+    "SEO & Metadata": {
+      "meta_title": {
+        "type": "Text",
+        "config": {
+          "label": "Meta Title",
+          "placeholder": ""
+        }
+      },
+      "meta_description": {
+        "type": "Text",
+        "config": {
+          "label": "Meta Description",
+          "placeholder": ""
+        }
+      }
+    }
+  },
+  "status": true,
+  "format": "page"
+}

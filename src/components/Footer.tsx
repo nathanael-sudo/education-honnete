@@ -79,6 +79,7 @@ export default function Footer({ layout }: { layout: LayoutDoc }) {
               {[
                 ['Accueil', '/'],
                 ['Cas pratiques', '/cas-pratiques-education-canine'],
+                ['Blog', '/blog'],
                 ['Tarifs', '/prix'],
                 ['Réservation', '/reservation'],
               ].map(([label, href]) => (

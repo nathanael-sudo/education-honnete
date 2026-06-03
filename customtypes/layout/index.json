@@ -1,0 +1,103 @@
+{
+  "id": "layout",
+  "label": "Layout",
+  "repeatable": false,
+  "json": {
+    "Main": {
+      "site_name": {
+        "type": "Text",
+        "config": {
+          "label": "Site Name",
+          "placeholder": "Éducation Honnête"
+        }
+      },
+      "navigation_links": {
+        "type": "Group",
+        "config": {
+          "label": "Navigation Links",
+          "fields": {
+            "label": {
+              "type": "Text",
+              "config": {
+                "label": "Label",
+                "placeholder": "Link text"
+              }
+            },
+            "link": {
+              "type": "Link",
+              "config": {
+                "label": "Link",
+                "placeholder": "",
+                "select": null,
+                "allowTargetBlank": true
+              }
+            }
+          }
+        }
+      },
+      "cta_button_label": {
+        "type": "Text",
+        "config": {
+          "label": "CTA Button Label",
+          "placeholder": "Réserver un cours d'essai"
+        }
+      },
+      "cta_button_link": {
+        "type": "Link",
+        "config": {
+          "label": "CTA Button Link",
+          "placeholder": "",
+          "select": null,
+          "allowTargetBlank": true
+        }
+      }
+    },
+    "Footer": {
+      "footer_text": {
+        "type": "StructuredText",
+        "config": {
+          "label": "Footer Text",
+          "placeholder": "",
+          "multi": "paragraph,strong,em,hyperlink",
+          "allowTargetBlank": true
+        }
+      },
+      "facebook_url": {
+        "type": "Link",
+        "config": {
+          "label": "Facebook URL",
+          "placeholder": "https://facebook.com/your-page",
+          "select": null,
+          "allowTargetBlank": true
+        }
+      },
+      "instagram_url": {
+        "type": "Link",
+        "config": {
+          "label": "Instagram URL",
+          "placeholder": "https://instagram.com/your-account",
+          "select": null,
+          "allowTargetBlank": true
+        }
+      },
+      "youtube_url": {
+        "type": "Link",
+        "config": {
+          "label": "YouTube URL",
+          "placeholder": "https://youtube.com/your-channel",
+          "select": null,
+          "allowTargetBlank": true
+        }
+      },
+      "copyright": {
+        "type": "Text",
+        "config": {
+          "label": "Copyright",
+          "placeholder": "© 2024 Éducation Honnête"
+        }
+      }
+    }
+  },
+  "status": true,
+  "format": "custom"
+}

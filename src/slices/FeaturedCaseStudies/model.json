@@ -1,0 +1,37 @@
+{
+  "id": "featured_case_studies",
+  "type": "SharedSlice",
+  "name": "Featured Case Studies",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "description": "Default",
+      "imageUrl": "",
+      "docURL": "...",
+      "version": "initial",
+      "primary": {
+        "title": {
+          "type": "Text",
+          "config": {
+            "label": "Section Title",
+            "placeholder": "Featured Case Studies"
+          }
+        }
+      },
+      "items": {
+        "case_study": {
+          "type": "Link",
+          "config": {
+            "label": "Case Study",
+            "select": "document",
+            "customtypes": [
+              "case_study"
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "description": "Showcase featured case studies"
+}

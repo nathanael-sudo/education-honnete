@@ -1,10 +1,12 @@
 import { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
+import Script from 'next/script'
 import { notFound } from 'next/navigation'
 import * as prismic from '@prismicio/client'
 import { PrismicRichText } from '@prismicio/react'
-import { createClient } from '@/prismicio'
+import { createClient, siteUrl } from '@/prismicio'
+import { articleSchema } from '@/lib/structured-data'
 import PhotoCarousel from '@/components/PhotoCarousel'
 
 type Props = { params: { uid: string } }
@@ -13,9 +15,24 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const client = createClient()
   try {
     const doc = await client.getByUID('case_study', params.uid)
+    const title = doc.data.meta_title
+      ?? `${doc.data.dog_name} – ${doc.data.dog_breed ?? 'Éducation canine'} à ${doc.data.location ?? 'Normandie'} | Éducation Honnête`
+    const description = doc.data.meta_description
+      ?? `Cas pratique : ${doc.data.dog_name}, ${doc.data.dog_breed ?? 'chien'} suivi par Marie-Anne Lamellière, éducatrice canine en Normandie.`
+    const pageUrl = `${siteUrl}/cas-pratiques-education-canine/${params.uid}`
     return {
-      title: doc.data.meta_title ?? `${doc.data.dog_name} – Éducation Honnête`,
-      description: doc.data.meta_description ?? undefined,
+      title,
+      description,
+      alternates: { canonical: pageUrl },
+      openGraph: {
+        title,
+        description,
+        url: pageUrl,
+        type: 'article',
+        images: prismic.isFilled.image(doc.data.dog_portrait)
+          ? [{ url: doc.data.dog_portrait.url! }]
+          : undefined,
+      },
     }
   } catch {
     return { title: 'Cas pratique – Éducation Honnête' }
@@ -63,6 +80,8 @@ export default async function CaseStudyPage({ params }: Props) {
     testimonial_rating, testimonial_content,
   } = doc.data
 
+  const pageUrl = `${siteUrl}/cas-pratiques-education-canine/${params.uid}`
+  const headline = `${dog_name ?? 'Cas pratique'} – ${dog_breed ?? ''} ${location ? `à ${location}` : ''}`
   const portraitUrl = prismic.isFilled.image(dog_portrait) ? dog_portrait.url : null
 
   const carouselImages = (photo_carousel ?? [])
@@ -75,6 +94,14 @@ export default async function CaseStudyPage({ params }: Props) {
 
   return (
     <article className="bg-cream min-h-screen">
+      <Script
+        id={`schema-article-${params.uid}`}
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(articleSchema({ headline, url: pageUrl })),
+        }}
+      />
+
       {/* Hero */}
       <div className="bg-forest-800 pt-16 pb-20 px-4 relative overflow-hidden">
         {portraitUrl && (
@@ -132,7 +159,6 @@ export default async function CaseStudyPage({ params }: Props) {
       )}
 
       <div className="max-w-3xl mx-auto px-4 sm:px-6 pb-20 space-y-14">
-        {/* Problem */}
         {prismic.isFilled.richText(initial_problem_content) && (
           <section>
             <h2 className="text-2xl font-serif font-bold text-forest-800 mb-4">
@@ -144,7 +170,6 @@ export default async function CaseStudyPage({ params }: Props) {
           </section>
         )}
 
-        {/* Approach */}
         {prismic.isFilled.richText(educator_approach_content) && (
           <section>
             <h2 className="text-2xl font-serif font-bold text-forest-800 mb-4">
@@ -156,7 +181,6 @@ export default async function CaseStudyPage({ params }: Props) {
           </section>
         )}
 
-        {/* Photo carousel */}
         {carouselImages.length > 0 && (
           <section>
             <h2 className="text-2xl font-serif font-bold text-forest-800 mb-6">Photos</h2>
@@ -164,7 +188,6 @@ export default async function CaseStudyPage({ params }: Props) {
           </section>
         )}
 
-        {/* Results */}
         {prismic.isFilled.richText(results_content) && (
           <section>
             <h2 className="text-2xl font-serif font-bold text-forest-800 mb-4">
@@ -176,7 +199,6 @@ export default async function CaseStudyPage({ params }: Props) {
           </section>
         )}
 
-        {/* Testimonial */}
         {prismic.isFilled.richText(testimonial_content) && (
           <section>
             <h2 className="text-2xl font-serif font-bold text-forest-800 mb-6">
@@ -206,7 +228,6 @@ export default async function CaseStudyPage({ params }: Props) {
           </section>
         )}
 
-        {/* Back link */}
         <div className="text-center pt-4">
           <Link
             href="/cas-pratiques-education-canine"

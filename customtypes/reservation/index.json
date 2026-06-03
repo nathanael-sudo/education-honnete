@@ -1,0 +1,76 @@
+{
+  "id": "reservation",
+  "label": "Reservation",
+  "repeatable": false,
+  "json": {
+    "Main": {
+      "title": {
+        "type": "Text",
+        "config": {
+          "label": "Page Title",
+          "placeholder": "Réserver un cours d'essai"
+        }
+      },
+      "subtitle": {
+        "type": "Text",
+        "config": {
+          "label": "Subtitle",
+          "placeholder": "Prêt à commencer l'aventure ? Contactez-moi pour réserver votre premier cours."
+        }
+      },
+      "contact_section_title": {
+        "type": "Text",
+        "config": {
+          "label": "Contact Section Title",
+          "placeholder": "Contactez-moi"
+        }
+      },
+      "contact_section_description": {
+        "type": "Text",
+        "config": {
+          "label": "Contact Section Description",
+          "placeholder": "Pour réserver votre cours d'essai ou pour toute question, n'hésitez pas à me contacter directement."
+        }
+      },
+      "email": {
+        "type": "Text",
+        "config": {
+          "label": "Email",
+          "placeholder": "contact@education-honnete.fr"
+        }
+      },
+      "phone": {
+        "type": "Text",
+        "config": {
+          "label": "Phone",
+          "placeholder": "06 12 34 56 78"
+        }
+      },
+      "footer_message": {
+        "type": "Text",
+        "config": {
+          "label": "Footer Message",
+          "placeholder": "Je vous répondrai dans les plus brefs délais pour convenir d'un rendez-vous qui vous convient."
+        }
+      }
+    },
+    "SEO & Metadata": {
+      "meta_title": {
+        "type": "Text",
+        "config": {
+          "label": "Meta Title",
+          "placeholder": ""
+        }
+      },
+      "meta_description": {
+        "type": "Text",
+        "config": {
+          "label": "Meta Description",
+          "placeholder": ""
+        }
+      }
+    }
+  },
+  "status": true,
+  "format": "page"
+}

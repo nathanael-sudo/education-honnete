@@ -14,12 +14,15 @@ type LayoutDoc = prismic.PrismicDocument<{
   cta_button_link: prismic.LinkField
 }>
 
+type CityPage = prismic.PrismicDocument<{ city_name: prismic.KeyTextField }>
+
 function resolveLink(link: prismic.LinkField): string {
   if (prismic.isFilled.link(link)) {
     if (link.link_type === 'Web') return (link as prismic.FilledLinkToWebField).url
     if (link.link_type === 'Document') {
       const doc = link as prismic.FilledContentRelationshipField
       if (doc.type === 'case_study') return `/cas-pratiques-education-canine/${doc.uid}`
+      if (doc.type === 'city_page') return `/educatrice-canine/${doc.uid}`
       if (doc.type === 'pricing') return '/prix'
       if (doc.type === 'reservation') return '/reservation'
     }
@@ -27,8 +30,9 @@ function resolveLink(link: prismic.LinkField): string {
   return '/'
 }
 
-export default function Header({ layout }: { layout: LayoutDoc }) {
+export default function Header({ layout, cityPages = [] }: { layout: LayoutDoc; cityPages?: CityPage[] }) {
   const [open, setOpen] = useState(false)
+  const [zonesOpen, setZonesOpen] = useState(false)
   const { site_name, navigation_links, cta_button_label, cta_button_link } = layout.data
 
   return (
@@ -57,6 +61,33 @@ export default function Header({ layout }: { layout: LayoutDoc }) {
                 </Link>
               )
             })}
+
+            {/* Zones d'intervention dropdown */}
+            {cityPages.length > 0 && (
+              <div className="relative group">
+                <button className="flex items-center gap-1 text-sm font-medium text-gray-600 hover:text-forest-700 transition-colors">
+                  Zones
+                  <svg className="w-3.5 h-3.5 mt-px" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+                <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 bg-white rounded-xl shadow-lg border border-gray-100 py-1.5 min-w-52 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-150">
+                  {cityPages.map((city) => (
+                    <Link
+                      key={city.uid}
+                      href={`/educatrice-canine/${city.uid}`}
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-forest-50 hover:text-forest-700 transition-colors"
+                    >
+                      {city.data.city_name ?? city.uid}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            <Link href="/blog" className="text-sm font-medium text-gray-600 hover:text-forest-700 transition-colors">
+              Blog
+            </Link>
           </nav>
 
           {/* CTA */}
@@ -103,6 +134,40 @@ export default function Header({ layout }: { layout: LayoutDoc }) {
                 </Link>
               )
             })}
+
+            {/* Zones collapsible */}
+            {cityPages.length > 0 && (
+              <div>
+                <button
+                  className="w-full flex items-center justify-between py-2 text-sm font-medium text-gray-700 hover:text-forest-700"
+                  onClick={() => setZonesOpen(!zonesOpen)}
+                >
+                  Zones d&apos;intervention
+                  <svg className={`w-3.5 h-3.5 transition-transform ${zonesOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+                {zonesOpen && (
+                  <div className="pl-3 flex flex-col gap-1 mb-1">
+                    {cityPages.map((city) => (
+                      <Link
+                        key={city.uid}
+                        href={`/educatrice-canine/${city.uid}`}
+                        className="py-1.5 text-sm text-gray-600 hover:text-forest-700"
+                        onClick={() => setOpen(false)}
+                      >
+                        {city.data.city_name ?? city.uid}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+
+            <Link href="/blog" className="py-2 text-sm font-medium text-gray-700 hover:text-forest-700" onClick={() => setOpen(false)}>
+              Blog
+            </Link>
+
             {prismic.isFilled.link(cta_button_link) && (
               <Link
                 href={resolveLink(cta_button_link)}

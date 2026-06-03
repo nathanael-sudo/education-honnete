@@ -1,0 +1,29 @@
+{
+  "repositoryName": "education-honnete",
+  "routes": [
+    {
+      "type": "blog_post",
+      "path": "/blog/:uid"
+    },
+    {
+      "type": "case_study",
+      "path": "/cas-pratiques-education-canine/:uid"
+    },
+    {
+      "type": "city_page",
+      "path": "/educatrice-canine/:uid"
+    },
+    {
+      "type": "homepage",
+      "path": "/"
+    },
+    {
+      "type": "pricing",
+      "path": "/prix"
+    },
+    {
+      "type": "reservation",
+      "path": "/reservation"
+    }
+  ]
+}
