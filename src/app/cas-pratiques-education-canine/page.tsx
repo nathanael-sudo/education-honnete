@@ -11,11 +11,12 @@ export const metadata: Metadata = {
 
 export default async function CasPratiquesPage() {
   const client = createClient()
-  const caseStudies = await client.getAllByType('case_study')
+  const caseStudies = await client.getAllByType('case_study', {
+    fetchLinks: ['race.nom'],
+  })
 
   return (
     <div className="bg-cream min-h-screen">
-      {/* Header band */}
       <div className="bg-forest-800 py-16 px-4">
         <div className="max-w-6xl mx-auto text-center">
           <p className="text-amber-warm font-semibold text-sm uppercase tracking-widest mb-3">Témoignages</p>
@@ -33,6 +34,15 @@ export default async function CasPratiquesPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {caseStudies.map((cs) => {
               const imgUrl = prismic.isFilled.image(cs.data.dog_portrait) ? cs.data.dog_portrait.url : null
+              const breedRef = cs.data.dog_breed as prismic.ContentRelationshipField<'race'>
+              const breedFilled = prismic.isFilled.contentRelationship(breedRef)
+                ? breedRef as prismic.FilledContentRelationshipField
+                : null
+              const breedName = breedFilled
+                ? ((breedFilled as unknown as { data?: { nom?: string } }).data?.nom) ?? null
+                : null
+              const breedUid = breedFilled?.uid ?? null
+
               return (
                 <Link
                   key={cs.uid}
@@ -54,9 +64,20 @@ export default async function CasPratiquesPage() {
                   </div>
 
                   <div className="p-6">
-                    <p className="text-xs font-semibold text-amber-warm uppercase tracking-wider mb-1">
-                      {cs.data.dog_breed}
-                    </p>
+                    {breedName && (
+                      breedUid ? (
+                        <span
+                          className="text-xs font-semibold text-amber-warm uppercase tracking-wider mb-1 block hover:text-amber-600 transition-colors"
+                          onClick={(e) => { e.preventDefault(); window.location.href = `/races/${breedUid}` }}
+                        >
+                          {breedName}
+                        </span>
+                      ) : (
+                        <p className="text-xs font-semibold text-amber-warm uppercase tracking-wider mb-1">
+                          {breedName}
+                        </p>
+                      )
+                    )}
                     <h2 className="text-2xl font-serif font-bold text-forest-800 group-hover:text-forest-600 transition-colors">
                       {cs.data.dog_name}
                     </h2>

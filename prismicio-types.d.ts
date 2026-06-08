@@ -265,26 +265,15 @@ interface CaseStudyDocumentData {
 	dog_name: prismic.KeyTextField;
 	
 	/**
-	 * Dog Breed field in *Case Study*
+	 * Race field in *Case Study*
 	 *
-	 * - **Field Type**: Text
+	 * - **Field Type**: Content Relationship → Race
 	 * - **Placeholder**: *None*
 	 * - **API ID Path**: case_study.dog_breed
 	 * - **Tab**: Main
-	 * - **Documentation**: https://prismic.io/docs/fields/text
-	 */
-	dog_breed: prismic.KeyTextField;
-
-	/**
-	 * Race field in *Case Study*
-	 *
-	 * - **Field Type**: Content Relationship
-	 * - **Placeholder**: *None*
-	 * - **API ID Path**: case_study.race
-	 * - **Tab**: Main
 	 * - **Documentation**: https://prismic.io/docs/fields/content-relationship
 	 */
-	race: prismic.ContentRelationshipField<"race">;
+	dog_breed: prismic.ContentRelationshipField<"race">;
 
 	/**
 	 * Dog Portrait field in *Case Study*

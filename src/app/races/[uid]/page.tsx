@@ -61,11 +61,11 @@ export default async function BreedPage({ params }: Props) {
   const imgUrl = prismic.isFilled.image(photo) ? photo.url : null
   const faqItems: { question: prismic.KeyTextField; reponse: prismic.RichTextField }[] = faq ?? []
 
-  // Fetch case studies linked to this breed
+  // Fetch case studies linked to this breed via dog_breed field
   let linkedCaseStudies: prismic.PrismicDocument[] = []
   try {
     linkedCaseStudies = await client.getAllByType('case_study', {
-      filters: [prismic.filter.at('my.case_study.race', breed.id)],
+      filters: [prismic.filter.at('my.case_study.dog_breed', breed.id)],
     })
   } catch {
     // none linked yet
@@ -164,7 +164,7 @@ export default async function BreedPage({ params }: Props) {
                     )}
                     <div>
                       <p className="text-xs font-semibold text-amber-warm uppercase tracking-wider mb-1">
-                        {cs.data.dog_breed}
+                        {nom}
                       </p>
                       <p className="font-serif font-bold text-forest-800 group-hover:text-forest-600 transition-colors">
                         {cs.data.dog_name}

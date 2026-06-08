@@ -19,16 +19,9 @@
         }
       },
       "dog_breed": {
-        "type": "Text",
-        "config": {
-          "label": "Dog Breed",
-          "placeholder": ""
-        }
-      },
-      "race": {
         "type": "Link",
         "config": {
-          "label": "Race (fiche race)",
+          "label": "Race",
           "select": "document",
           "customtypes": [
             {

@@ -17,6 +17,7 @@ export default async function FeaturedCaseStudiesSlice({ slice }: { slice: Featu
   const caseStudies = await client.getAllByType('case_study', {
     limit: 3,
     orderings: [{ field: 'document.last_publication_date', direction: 'desc' }],
+    fetchLinks: ['race.nom'],
   })
 
   return (
@@ -56,7 +57,9 @@ export default async function FeaturedCaseStudiesSlice({ slice }: { slice: Featu
                 </div>
                 <div className="p-5">
                   <p className="text-xs font-semibold text-amber-warm uppercase tracking-wider mb-1">
-                    {cs.data.dog_breed}
+                    {prismic.isFilled.contentRelationship(cs.data.dog_breed)
+                      ? ((cs.data.dog_breed as unknown as { data?: { nom?: string } }).data?.nom ?? null)
+                      : null}
                   </p>
                   <h3 className="text-xl font-serif font-bold text-forest-800 group-hover:text-forest-600 transition-colors">
                     {cs.data.dog_name}

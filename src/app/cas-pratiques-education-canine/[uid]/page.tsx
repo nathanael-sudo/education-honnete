@@ -11,14 +11,27 @@ import PhotoCarousel from '@/components/PhotoCarousel'
 
 type Props = { params: { uid: string } }
 
+function getBreedInfo(field: prismic.ContentRelationshipField<'race'>) {
+  if (!prismic.isFilled.contentRelationship(field)) return null
+  const filled = field as prismic.FilledContentRelationshipField
+  return {
+    uid: filled.uid ?? null,
+    nom: ((filled as unknown as { data?: { nom?: string } }).data?.nom) ?? null,
+  }
+}
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const client = createClient()
   try {
-    const doc = await client.getByUID('case_study', params.uid)
+    const doc = await client.getByUID('case_study', params.uid, {
+      fetchLinks: ['race.nom'],
+    })
+    const breed = getBreedInfo(doc.data.dog_breed)
+    const breedLabel = breed?.nom ?? 'chien'
     const title = doc.data.meta_title
-      ?? `${doc.data.dog_name} – ${doc.data.dog_breed ?? 'Éducation canine'} à ${doc.data.location ?? 'Normandie'} | Éducation Honnête`
+      ?? `${doc.data.dog_name} – ${breedLabel} à ${doc.data.location ?? 'Normandie'} | Éducation Honnête`
     const description = doc.data.meta_description
-      ?? `Cas pratique : ${doc.data.dog_name}, ${doc.data.dog_breed ?? 'chien'} suivi par Marie-Anne Lamellière, éducatrice canine en Normandie.`
+      ?? `Cas pratique : ${doc.data.dog_name}, ${breedLabel} suivi par Marie-Anne Lamellière, éducatrice canine en Normandie.`
     const pageUrl = `${siteUrl}/cas-pratiques-education-canine/${params.uid}`
     return {
       title,
@@ -65,7 +78,9 @@ export default async function CaseStudyPage({ params }: Props) {
   const client = createClient()
   let doc
   try {
-    doc = await client.getByUID('case_study', params.uid)
+    doc = await client.getByUID('case_study', params.uid, {
+      fetchLinks: ['race.nom'],
+    })
   } catch {
     notFound()
   }
@@ -78,15 +93,12 @@ export default async function CaseStudyPage({ params }: Props) {
     results_title, results_content,
     testimonial_title, testimonial_owner_name, testimonial_owner_location,
     testimonial_rating, testimonial_content,
-    race,
   } = doc.data
 
-  const raceUid = prismic.isFilled.contentRelationship(race)
-    ? (race as prismic.FilledContentRelationshipField).uid ?? null
-    : null
+  const breed = getBreedInfo(dog_breed)
 
   const pageUrl = `${siteUrl}/cas-pratiques-education-canine/${params.uid}`
-  const headline = `${dog_name ?? 'Cas pratique'} – ${dog_breed ?? ''} ${location ? `à ${location}` : ''}`
+  const headline = `${dog_name ?? 'Cas pratique'} – ${breed?.nom ?? ''} ${location ? `à ${location}` : ''}`
   const portraitUrl = prismic.isFilled.image(dog_portrait) ? dog_portrait.url : null
 
   const carouselImages = (photo_carousel ?? [])
@@ -124,16 +136,20 @@ export default async function CaseStudyPage({ params }: Props) {
             </svg>
             Tous les cas pratiques
           </Link>
-          {raceUid ? (
-            <Link
-              href={`/races/${raceUid}`}
-              className="inline-block text-amber-warm font-semibold text-sm uppercase tracking-widest mb-2 hover:text-amber-400 transition-colors"
-            >
-              {dog_breed}
-            </Link>
-          ) : (
-            <p className="text-amber-warm font-semibold text-sm uppercase tracking-widest mb-2">{dog_breed}</p>
+
+          {breed?.nom && (
+            breed.uid ? (
+              <Link
+                href={`/races/${breed.uid}`}
+                className="inline-block text-amber-warm font-semibold text-sm uppercase tracking-widest mb-2 hover:text-amber-400 transition-colors"
+              >
+                {breed.nom}
+              </Link>
+            ) : (
+              <p className="text-amber-warm font-semibold text-sm uppercase tracking-widest mb-2">{breed.nom}</p>
+            )
           )}
+
           <h1 className="text-5xl sm:text-6xl font-serif font-bold text-white mb-4">{dog_name}</h1>
           <div className="flex items-center justify-center flex-wrap gap-4 text-forest-200 text-sm">
             {location && (
