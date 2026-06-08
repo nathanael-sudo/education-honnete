@@ -274,7 +274,18 @@ interface CaseStudyDocumentData {
 	 * - **Documentation**: https://prismic.io/docs/fields/text
 	 */
 	dog_breed: prismic.KeyTextField;
-	
+
+	/**
+	 * Race field in *Case Study*
+	 *
+	 * - **Field Type**: Content Relationship
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: case_study.race
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/content-relationship
+	 */
+	race: prismic.ContentRelationshipField<"race">;
+
 	/**
 	 * Dog Portrait field in *Case Study*
 	 *
@@ -1035,7 +1046,111 @@ interface ReservationDocumentData {
  */
 export type ReservationDocument<Lang extends string = string> = prismic.PrismicDocumentWithoutUID<Simplify<ReservationDocumentData>, "reservation", Lang>;
 
-export type AllDocumentTypes = BlogPostDocument | CaseStudyDocument | CityPageDocument | HomepageDocument | LayoutDocument | PricingDocument | ReservationDocument;
+/**
+ * Item in *Race → FAQ*
+ */
+export interface RaceDocumentDataFaqItem {
+	/**
+	 * Question field in *Race → FAQ*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: race.faq[].question
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	question: prismic.KeyTextField;
+
+	/**
+	 * Réponse field in *Race → FAQ*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: race.faq[].reponse
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	reponse: prismic.RichTextField;
+}
+
+/**
+ * Content for Race documents
+ */
+interface RaceDocumentData {
+	/**
+	 * Nom de la race field in *Race*
+	 *
+	 * - **Field Type**: Text
+	 * - **API ID Path**: race.nom
+	 * - **Tab**: Main
+	 */
+	nom: prismic.KeyTextField;
+
+	/**
+	 * Photo field in *Race*
+	 *
+	 * - **Field Type**: Image
+	 * - **API ID Path**: race.photo
+	 * - **Tab**: Main
+	 */
+	photo: prismic.ImageField<never>;
+
+	/**
+	 * Description field in *Race*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **API ID Path**: race.description
+	 * - **Tab**: Main
+	 */
+	description: prismic.RichTextField;
+
+	/**
+	 * FAQ field in *Race*
+	 *
+	 * - **Field Type**: Group
+	 * - **API ID Path**: race.faq[]
+	 * - **Tab**: Main
+	 */
+	faq: prismic.GroupField<Simplify<RaceDocumentDataFaqItem>>;
+
+	/**
+	 * Meta Title field in *Race*
+	 *
+	 * - **Field Type**: Text
+	 * - **API ID Path**: race.meta_title
+	 * - **Tab**: SEO & Metadata
+	 */
+	meta_title: prismic.KeyTextField;
+
+	/**
+	 * Meta Description field in *Race*
+	 *
+	 * - **Field Type**: Text
+	 * - **API ID Path**: race.meta_description
+	 * - **Tab**: SEO & Metadata
+	 */
+	meta_description: prismic.KeyTextField;
+
+	/**
+	 * Meta Image field in *Race*
+	 *
+	 * - **Field Type**: Image
+	 * - **API ID Path**: race.meta_image
+	 * - **Tab**: SEO & Metadata
+	 */
+	meta_image: prismic.ImageField<never>;
+}
+
+/**
+ * Race document from Prismic
+ *
+ * - **API ID**: `race`
+ * - **Repeatable**: `true`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type RaceDocument<Lang extends string = string> = prismic.PrismicDocumentWithUID<Simplify<RaceDocumentData>, "race", Lang>;
+
+export type AllDocumentTypes = BlogPostDocument | CaseStudyDocument | CityPageDocument | HomepageDocument | LayoutDocument | PricingDocument | RaceDocument | ReservationDocument;
 
 /**
  * Primary content in *Content → Default → Primary*
@@ -1540,6 +1655,9 @@ declare module "@prismicio/client" {
 			PricingDocumentDataPlansItem,
 			ReservationDocument,
 			ReservationDocumentData,
+			RaceDocument,
+			RaceDocumentData,
+			RaceDocumentDataFaqItem,
 			AllDocumentTypes,
 			ContentSlice,
 			ContentSliceDefaultPrimary,

@@ -25,6 +25,19 @@
           "placeholder": ""
         }
       },
+      "race": {
+        "type": "Link",
+        "config": {
+          "label": "Race (fiche race)",
+          "select": "document",
+          "customtypes": [
+            {
+              "id": "race",
+              "fields": ["nom"]
+            }
+          ]
+        }
+      },
       "dog_portrait": {
         "type": "Image",
         "config": {

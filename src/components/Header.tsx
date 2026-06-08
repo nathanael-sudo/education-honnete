@@ -85,6 +85,10 @@ export default function Header({ layout, cityPages = [] }: { layout: LayoutDoc; 
               </div>
             )}
 
+            <Link href="/races" className="text-sm font-medium text-gray-600 hover:text-forest-700 transition-colors">
+              Races
+            </Link>
+
             <Link href="/blog" className="text-sm font-medium text-gray-600 hover:text-forest-700 transition-colors">
               Blog
             </Link>
@@ -163,6 +167,10 @@ export default function Header({ layout, cityPages = [] }: { layout: LayoutDoc; 
                 )}
               </div>
             )}
+
+            <Link href="/races" className="py-2 text-sm font-medium text-gray-700 hover:text-forest-700" onClick={() => setOpen(false)}>
+              Races
+            </Link>
 
             <Link href="/blog" className="py-2 text-sm font-medium text-gray-700 hover:text-forest-700" onClick={() => setOpen(false)}>
               Blog

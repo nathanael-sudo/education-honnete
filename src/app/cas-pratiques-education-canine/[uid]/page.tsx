@@ -78,7 +78,12 @@ export default async function CaseStudyPage({ params }: Props) {
     results_title, results_content,
     testimonial_title, testimonial_owner_name, testimonial_owner_location,
     testimonial_rating, testimonial_content,
+    race,
   } = doc.data
+
+  const raceUid = prismic.isFilled.contentRelationship(race)
+    ? (race as prismic.FilledContentRelationshipField).uid ?? null
+    : null
 
   const pageUrl = `${siteUrl}/cas-pratiques-education-canine/${params.uid}`
   const headline = `${dog_name ?? 'Cas pratique'} – ${dog_breed ?? ''} ${location ? `à ${location}` : ''}`
@@ -119,7 +124,16 @@ export default async function CaseStudyPage({ params }: Props) {
             </svg>
             Tous les cas pratiques
           </Link>
-          <p className="text-amber-warm font-semibold text-sm uppercase tracking-widest mb-2">{dog_breed}</p>
+          {raceUid ? (
+            <Link
+              href={`/races/${raceUid}`}
+              className="inline-block text-amber-warm font-semibold text-sm uppercase tracking-widest mb-2 hover:text-amber-400 transition-colors"
+            >
+              {dog_breed}
+            </Link>
+          ) : (
+            <p className="text-amber-warm font-semibold text-sm uppercase tracking-widest mb-2">{dog_breed}</p>
+          )}
           <h1 className="text-5xl sm:text-6xl font-serif font-bold text-white mb-4">{dog_name}</h1>
           <div className="flex items-center justify-center flex-wrap gap-4 text-forest-200 text-sm">
             {location && (
