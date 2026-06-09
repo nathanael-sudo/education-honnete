@@ -854,6 +854,15 @@ export interface PricingDocumentDataPlansItem {
 }
 
 /**
+ * Item in *Pricing → Étapes*
+ */
+export interface PricingDocumentDataEtapesItem {
+	num: prismic.KeyTextField;
+	titre: prismic.KeyTextField;
+	texte: prismic.KeyTextField;
+}
+
+/**
  * Item in *Pricing → Questions fréquentes*
  */
 export interface PricingDocumentDataFaqItem {
@@ -903,6 +912,10 @@ interface PricingDocumentData {
 	 * - **Tab**: Main
 	 * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
 	 */
+	methode_intro: prismic.KeyTextField;
+	etapes: prismic.GroupField<Simplify<PricingDocumentDataEtapesItem>>;
+	balades_titre: prismic.KeyTextField;
+	balades_texte: prismic.KeyTextField;
 	plans: prismic.GroupField<Simplify<PricingDocumentDataPlansItem>>;
 
 	/**
@@ -1710,6 +1723,7 @@ declare module "@prismicio/client" {
 			PricingDocument,
 			PricingDocumentData,
 			PricingDocumentDataPlansItem,
+			PricingDocumentDataEtapesItem,
 			PricingDocumentDataFaqItem,
 			ReservationDocument,
 			ReservationDocumentData,

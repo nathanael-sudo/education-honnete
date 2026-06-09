@@ -20,10 +20,55 @@
           "allowTargetBlank": true
         }
       },
+      "methode_intro": {
+        "type": "Text",
+        "config": {
+          "label": "Méthode — Sous-titre"
+        }
+      },
+      "etapes": {
+        "type": "Group",
+        "config": {
+          "label": "Étapes (Comment je travaille)",
+          "fields": {
+            "num": {
+              "type": "Text",
+              "config": {
+                "label": "Numéro",
+                "placeholder": "01"
+              }
+            },
+            "titre": {
+              "type": "Text",
+              "config": {
+                "label": "Titre"
+              }
+            },
+            "texte": {
+              "type": "Text",
+              "config": {
+                "label": "Texte"
+              }
+            }
+          }
+        }
+      },
+      "balades_titre": {
+        "type": "Text",
+        "config": {
+          "label": "Balades collectives — Titre"
+        }
+      },
+      "balades_texte": {
+        "type": "Text",
+        "config": {
+          "label": "Balades collectives — Texte"
+        }
+      },
       "plans": {
         "type": "Group",
         "config": {
-          "label": "Plans",
+          "label": "Plans tarifaires",
           "fields": {
             "plan_title": {
               "type": "Text",
