@@ -49,18 +49,20 @@ export default function Header({ layout, cityPages = [] }: { layout: LayoutDoc; 
 
           {/* Desktop nav */}
           <nav className="hidden md:flex items-center gap-6">
-            {navigation_links.map((item) => {
-              const href = resolveLink(item.link)
-              return (
-                <Link
-                  key={href}
-                  href={href}
-                  className="text-sm font-medium text-gray-600 hover:text-forest-700 transition-colors"
-                >
-                  {item.label}
-                </Link>
-              )
-            })}
+            {navigation_links
+              .filter((item) => ![`/`, '/reservation'].includes(resolveLink(item.link)))
+              .map((item) => {
+                const href = resolveLink(item.link)
+                return (
+                  <Link
+                    key={href}
+                    href={href}
+                    className="text-sm font-medium text-gray-600 hover:text-forest-700 transition-colors"
+                  >
+                    {item.label}
+                  </Link>
+                )
+              })}
 
             {/* Zones d'intervention dropdown */}
             {cityPages.length > 0 && (
@@ -91,6 +93,10 @@ export default function Header({ layout, cityPages = [] }: { layout: LayoutDoc; 
 
             <Link href="/blog" className="text-sm font-medium text-gray-600 hover:text-forest-700 transition-colors">
               Blog
+            </Link>
+
+            <Link href="/a-propos" className="text-sm font-medium text-gray-600 hover:text-forest-700 transition-colors">
+              À propos
             </Link>
           </nav>
 
@@ -125,19 +131,21 @@ export default function Header({ layout, cityPages = [] }: { layout: LayoutDoc; 
       {open && (
         <div className="md:hidden border-t border-gray-100 bg-white px-4 pb-4">
           <nav className="flex flex-col gap-1 pt-3">
-            {navigation_links.map((item) => {
-              const href = resolveLink(item.link)
-              return (
-                <Link
-                  key={href}
-                  href={href}
-                  className="py-2 text-sm font-medium text-gray-700 hover:text-forest-700"
-                  onClick={() => setOpen(false)}
-                >
-                  {item.label}
-                </Link>
-              )
-            })}
+            {navigation_links
+              .filter((item) => ![`/`, '/reservation'].includes(resolveLink(item.link)))
+              .map((item) => {
+                const href = resolveLink(item.link)
+                return (
+                  <Link
+                    key={href}
+                    href={href}
+                    className="py-2 text-sm font-medium text-gray-700 hover:text-forest-700"
+                    onClick={() => setOpen(false)}
+                  >
+                    {item.label}
+                  </Link>
+                )
+              })}
 
             {/* Zones collapsible */}
             {cityPages.length > 0 && (
@@ -174,6 +182,10 @@ export default function Header({ layout, cityPages = [] }: { layout: LayoutDoc; 
 
             <Link href="/blog" className="py-2 text-sm font-medium text-gray-700 hover:text-forest-700" onClick={() => setOpen(false)}>
               Blog
+            </Link>
+
+            <Link href="/a-propos" className="py-2 text-sm font-medium text-gray-700 hover:text-forest-700" onClick={() => setOpen(false)}>
+              À propos
             </Link>
 
             {prismic.isFilled.link(cta_button_link) && (

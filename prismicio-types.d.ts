@@ -1163,7 +1163,47 @@ interface RaceDocumentData {
  */
 export type RaceDocument<Lang extends string = string> = prismic.PrismicDocumentWithUID<Simplify<RaceDocumentData>, "race", Lang>;
 
-export type AllDocumentTypes = BlogPostDocument | CaseStudyDocument | CityPageDocument | HomepageDocument | LayoutDocument | PricingDocument | RaceDocument | ReservationDocument;
+/**
+ * Item in *About → Valeurs*
+ */
+export interface AboutDocumentDataValeursItem {
+	titre: prismic.KeyTextField;
+	texte: prismic.KeyTextField;
+}
+
+/**
+ * Item in *About → Parcours & Formation*
+ */
+export interface AboutDocumentDataCredentialsItem {
+	titre: prismic.KeyTextField;
+	detail: prismic.KeyTextField;
+}
+
+/**
+ * Content for About documents
+ */
+interface AboutDocumentData {
+	histoire: prismic.RichTextField;
+	citation: prismic.KeyTextField;
+	philosophie_intro: prismic.KeyTextField;
+	philosophie_contenu: prismic.RichTextField;
+	valeurs: prismic.GroupField<Simplify<AboutDocumentDataValeursItem>>;
+	credentials: prismic.GroupField<Simplify<AboutDocumentDataCredentialsItem>>;
+	cta_texte: prismic.KeyTextField;
+	meta_title: prismic.KeyTextField;
+	meta_description: prismic.KeyTextField;
+}
+
+/**
+ * About document from Prismic
+ *
+ * - **API ID**: `about`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ */
+export type AboutDocument<Lang extends string = string> = prismic.PrismicDocumentWithoutUID<Simplify<AboutDocumentData>, "about", Lang>;
+
+export type AllDocumentTypes = AboutDocument | BlogPostDocument | CaseStudyDocument | CityPageDocument | HomepageDocument | LayoutDocument | PricingDocument | RaceDocument | ReservationDocument;
 
 /**
  * Primary content in *Content → Default → Primary*
@@ -1646,7 +1686,11 @@ declare module "@prismicio/client" {
 	
 	namespace Content {
 		export type {
-			BlogPostDocument,
+			AboutDocument,
+				AboutDocumentData,
+				AboutDocumentDataValeursItem,
+				AboutDocumentDataCredentialsItem,
+				BlogPostDocument,
 			BlogPostDocumentData,
 			BlogPostDocumentDataSlicesSlice,
 			BlogPostDocumentDataTagsItem,

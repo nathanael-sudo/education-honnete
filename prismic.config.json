@@ -24,6 +24,10 @@
     {
       "type": "reservation",
       "path": "/reservation"
+    },
+    {
+      "type": "about",
+      "path": "/a-propos"
     }
   ]
 }

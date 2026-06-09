@@ -20,5 +20,6 @@ export function linkResolver(doc: prismic.PrismicDocument): string {
   if (doc.type === 'blog_post') return `/blog/${doc.uid}`
   if (doc.type === 'city_page') return `/educatrice-canine/${doc.uid}`
   if (doc.type === 'race') return `/races/${doc.uid}`
+  if (doc.type === 'about') return '/a-propos'
   return '/'
 }

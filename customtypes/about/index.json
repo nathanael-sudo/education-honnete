@@ -1,0 +1,97 @@
+{
+  "id": "about",
+  "label": "About",
+  "repeatable": false,
+  "status": true,
+  "format": "page",
+  "json": {
+    "Main": {
+      "histoire": {
+        "type": "StructuredText",
+        "config": {
+          "label": "Histoire",
+          "multi": "paragraph,strong,em"
+        }
+      },
+      "citation": {
+        "type": "Text",
+        "config": {
+          "label": "Citation mise en avant"
+        }
+      },
+      "philosophie_intro": {
+        "type": "Text",
+        "config": {
+          "label": "Philosophie — Intro (1 ligne)"
+        }
+      },
+      "philosophie_contenu": {
+        "type": "StructuredText",
+        "config": {
+          "label": "Philosophie — Contenu",
+          "multi": "paragraph,strong,em"
+        }
+      },
+      "valeurs": {
+        "type": "Group",
+        "config": {
+          "label": "Valeurs (4 principes)",
+          "fields": {
+            "titre": {
+              "type": "Text",
+              "config": {
+                "label": "Titre"
+              }
+            },
+            "texte": {
+              "type": "Text",
+              "config": {
+                "label": "Texte"
+              }
+            }
+          }
+        }
+      },
+      "credentials": {
+        "type": "Group",
+        "config": {
+          "label": "Parcours & Formation",
+          "fields": {
+            "titre": {
+              "type": "Text",
+              "config": {
+                "label": "Titre"
+              }
+            },
+            "detail": {
+              "type": "Text",
+              "config": {
+                "label": "Détail"
+              }
+            }
+          }
+        }
+      },
+      "cta_texte": {
+        "type": "Text",
+        "config": {
+          "label": "CTA — Description"
+        }
+      }
+    },
+    "SEO & Metadata": {
+      "meta_title": {
+        "type": "Text",
+        "config": {
+          "label": "Meta Title"
+        }
+      },
+      "meta_description": {
+        "type": "Text",
+        "config": {
+          "label": "Meta Description"
+        }
+      }
+    }
+  }
+}
