@@ -127,27 +127,31 @@ export default async function CaseStudyPage({ params }: Props) {
           </div>
         )}
         <div className="relative max-w-4xl mx-auto text-center">
-          <Link
-            href="/cas-pratiques-education-canine"
-            className="inline-flex items-center gap-1.5 text-forest-300 hover:text-white text-sm mb-6 transition-colors"
-          >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-            </svg>
-            Tous les cas pratiques
-          </Link>
+          <div className="mb-8">
+            <Link
+              href="/cas-pratiques-education-canine"
+              className="inline-flex items-center gap-1.5 text-forest-300 hover:text-white text-sm transition-colors"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+              </svg>
+              Tous les cas pratiques
+            </Link>
+          </div>
 
           {breed?.nom && (
-            breed.uid ? (
-              <Link
-                href={`/races/${breed.uid}`}
-                className="inline-block text-amber-warm font-semibold text-sm uppercase tracking-widest mb-2 hover:text-amber-400 transition-colors"
-              >
-                {breed.nom}
-              </Link>
-            ) : (
-              <p className="text-amber-warm font-semibold text-sm uppercase tracking-widest mb-2">{breed.nom}</p>
-            )
+            <div className="mb-3">
+              {breed.uid ? (
+                <Link
+                  href={`/races/${breed.uid}`}
+                  className="inline-block text-amber-warm font-semibold text-sm uppercase tracking-widest hover:text-amber-400 transition-colors"
+                >
+                  {breed.nom}
+                </Link>
+              ) : (
+                <p className="text-amber-warm font-semibold text-sm uppercase tracking-widest">{breed.nom}</p>
+              )}
+            </div>
           )}
 
           <h1 className="text-5xl sm:text-6xl font-serif font-bold text-white mb-4">{dog_name}</h1>
