@@ -55,7 +55,7 @@ export default async function CityPage({ params }: Props) {
   // Fetch case studies and filter to those mentioning this city
   let relatedCaseStudies: prismic.PrismicDocument[] = []
   try {
-    const all = await client.getAllByType('case_study')
+    const all = await client.getAllByType('case_study', { fetchLinks: ['race.nom'] })
     const cityLower = (city_name ?? params.city).toLowerCase()
     relatedCaseStudies = all.filter((cs) =>
       (cs.data.location ?? '').toLowerCase().includes(cityLower)
@@ -162,7 +162,9 @@ export default async function CityPage({ params }: Props) {
                     )}
                     <div>
                       <p className="text-xs font-semibold text-amber-warm uppercase tracking-wider mb-1">
-                        {cs.data.dog_breed}
+                        {prismic.isFilled.contentRelationship(cs.data.dog_breed)
+                          ? ((cs.data.dog_breed as unknown as { data?: { nom?: string } }).data?.nom ?? null)
+                          : null}
                       </p>
                       <p className="font-serif font-bold text-forest-800 group-hover:text-forest-600 transition-colors">
                         {cs.data.dog_name}
