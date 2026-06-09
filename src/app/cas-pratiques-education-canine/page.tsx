@@ -41,7 +41,6 @@ export default async function CasPratiquesPage() {
               const breedName = breedFilled
                 ? ((breedFilled as unknown as { data?: { nom?: string } }).data?.nom) ?? null
                 : null
-              const breedUid = breedFilled?.uid ?? null
 
               return (
                 <Link
@@ -65,18 +64,9 @@ export default async function CasPratiquesPage() {
 
                   <div className="p-6">
                     {breedName && (
-                      breedUid ? (
-                        <span
-                          className="text-xs font-semibold text-amber-warm uppercase tracking-wider mb-1 block hover:text-amber-600 transition-colors"
-                          onClick={(e) => { e.preventDefault(); window.location.href = `/races/${breedUid}` }}
-                        >
-                          {breedName}
-                        </span>
-                      ) : (
-                        <p className="text-xs font-semibold text-amber-warm uppercase tracking-wider mb-1">
-                          {breedName}
-                        </p>
-                      )
+                      <p className="text-xs font-semibold text-amber-warm uppercase tracking-wider mb-1">
+                        {breedName}
+                      </p>
                     )}
                     <h2 className="text-2xl font-serif font-bold text-forest-800 group-hover:text-forest-600 transition-colors">
                       {cs.data.dog_name}
