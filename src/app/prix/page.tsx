@@ -12,14 +12,14 @@ export async function generateMetadata(): Promise<Metadata> {
   const page = await client.getSingle('pricing')
   const pageUrl = `${siteUrl}/prix`
   return {
-    title: 'Tarifs éducation canine Manche – Cours & Forfaits',
+    title: 'Déroulement des séances & Tarifs | Éducation Honnête',
     description:
       page.data.meta_description ??
-      'Tarifs éducation canine Manche : 40€/séance, forfaits 5 ou 10 séances. Cours particuliers à domicile, frais de déplacement inclus secteur Granville/Coutances.',
+      "Comment se déroulent les séances avec Marie-Anne Lamellière, éducatrice canine en Manche ? Première rencontre, méthode de travail, tarifs et forfaits à domicile.",
     alternates: { canonical: pageUrl },
     openGraph: {
-      title: 'Tarifs éducation canine Manche – Cours & Forfaits | Éducation Honnête',
-      description: 'Séance à 40€, forfait 5 séances 190€, forfait 10 séances 370€. Frais de déplacement inclus sur Granville, Coutances, Bréhal.',
+      title: 'Déroulement des séances & Tarifs | Éducation Honnête',
+      description: "Première séance de bilan, cours particuliers à domicile, balades collectives. Frais de déplacement inclus sur Granville, Coutances et secteur Manche.",
       url: pageUrl,
     },
   }
@@ -33,10 +33,33 @@ function CheckIcon() {
   )
 }
 
-const PRIX_FAQ = [
+const STEPS = [
+  {
+    num: '01',
+    titre: 'La première rencontre',
+    texte: "La première séance est un bilan : vous me parlez des problèmes rencontrés, de vos questions sur l'éducation et les besoins de votre chien. Cela se passe chez vous ou lors d'une balade — je m'adapte. À partir de cette rencontre, j'établis un plan de travail concret et personnalisé.",
+  },
+  {
+    num: '02',
+    titre: "Observer avant d'intervenir",
+    texte: "Chaque chien est unique. Je passe toujours par une phase d'observation pour bien comprendre le chien, son fonctionnement, et le contexte familial. Je m'occupe de toutes les races, chiots et adultes confondus.",
+  },
+  {
+    num: '03',
+    titre: "Par le jeu et l'enthousiasme",
+    texte: "Je privilégie la stimulation, les félicitations et la bienveillance. J'utilise rarement la friandise sauf dans des cas spécifiques — le chien doit se connecter à vous, pas à la nourriture. Un chien qui joue et qui s'amuse apprend vite.",
+  },
+  {
+    num: '04',
+    titre: 'Travailler le binôme',
+    texte: "L'éducation canine, c'est aussi transmettre au maître les bons réflexes pour le quotidien. Je vous accompagne sur la posture, la cohérence et la communication pour que les progrès durent bien au-delà des séances.",
+  },
+]
+
+const DEFAULT_FAQ = [
   {
     q: 'Les frais de déplacement sont-ils inclus ?',
-    a: 'Oui, les frais de déplacement sont inclus pour tout le secteur Coutançais et Granvillais. Pour les zones plus éloignées, contactez-moi pour un devis personnalisé.',
+    a: "Oui, les frais de déplacement sont inclus pour tout le secteur de Coutançais et Granvillais. Pour les zones plus éloignées, contactez-moi pour un devis personnalisé.",
   },
   {
     q: "Les séances d'un forfait sont-elles valables combien de temps ?",
@@ -44,18 +67,35 @@ const PRIX_FAQ = [
   },
   {
     q: 'Comment se déroule la première séance ?',
-    a: "La première séance commence toujours par un bilan complet : histoire du chien, comportements problématiques, attentes du maître. Ensuite, on travaille directement avec le chien pour observer ses réactions. À la fin, vous repartez avec un plan d'action concret et des exercices à pratiquer au quotidien.",
+    a: "La première séance commence par un bilan complet : histoire du chien, comportements problématiques, attentes. On travaille ensuite directement avec le chien pour observer ses réactions. Vous repartez avec un plan d'action concret.",
   },
   {
     q: "Proposez-vous des cours d'essai ?",
-    a: "Oui, vous pouvez réserver un cours d'essai individuel à 40€ pour voir si l'approche vous convient avant de vous engager dans un forfait.",
+    a: "Oui, vous pouvez réserver une séance individuelle pour voir si l'approche vous convient avant de vous engager dans un forfait.",
+  },
+  {
+    q: 'Proposez-vous des balades collectives ?',
+    a: "Oui ! La socialisation est essentielle pour l'équilibre du chien. Je propose des balades collectives encadrées, avec une attention particulière au caractère de chaque chien pour que la meute soit harmonieuse.",
+  },
+  {
+    q: 'Intervenez-vous uniquement en cours particuliers ?',
+    a: "Oui, les séances individuelles me permettent d'être 100 % disponible pour observer et conseiller le maître et son chien. Les balades collectives viennent en complément pour la socialisation.",
   },
 ]
 
 export default async function PrixPage() {
   const client = createClient()
   const page = await client.getSingle('pricing')
-  const { title, description, plans } = page.data
+  const { title, description, plans, faq } = page.data
+
+  const prismicFaq: { q: string; a: string }[] = (faq ?? [])
+    .filter((item: { question: string | null; reponse: string | null }) => item.question && item.reponse)
+    .map((item: { question: string | null; reponse: string | null }) => ({
+      q: item.question as string,
+      a: item.reponse as string,
+    }))
+
+  const faqItems = prismicFaq.length > 0 ? prismicFaq : DEFAULT_FAQ
 
   return (
     <div className="bg-cream min-h-screen">
@@ -65,11 +105,11 @@ export default async function PrixPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
       />
 
-      {/* Header */}
+      {/* Hero */}
       <div className="bg-forest-800 py-16 px-4 text-center">
-        <p className="text-amber-warm font-semibold text-sm uppercase tracking-widest mb-3">Investissement</p>
+        <p className="text-amber-warm font-semibold text-sm uppercase tracking-widest mb-3">Méthode & Tarifs</p>
         <h1 className="text-4xl sm:text-5xl font-serif font-bold text-white">
-          {title ?? 'Nos tarifs'}
+          {title ?? 'Déroulement des séances & Tarifs'}
         </h1>
         {prismic.isFilled.richText(description) && (
           <div className="mt-4 text-forest-200 text-lg max-w-xl mx-auto [&_p]:leading-relaxed">
@@ -78,8 +118,62 @@ export default async function PrixPage() {
         )}
       </div>
 
-      {/* Plans */}
+      {/* How I work */}
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-16">
+        <div className="text-center mb-12">
+          <p className="text-amber-warm font-semibold text-sm uppercase tracking-widest mb-2">Ma méthode</p>
+          <h2 className="text-3xl font-serif font-bold text-forest-800">Comment je travaille</h2>
+          <p className="mt-3 text-gray-600 max-w-xl mx-auto">
+            {"Je n'ai pas de recette miracle — j'ai une méthode, de la patience, et une vraie écoute du binôme maître-chien."}
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          {STEPS.map((step) => (
+            <div key={step.num} className="bg-white rounded-2xl p-6 shadow-sm flex gap-5">
+              <div className="text-3xl font-serif font-bold text-forest-100 leading-none shrink-0 select-none">
+                {step.num}
+              </div>
+              <div>
+                <h3 className="font-serif font-bold text-forest-800 mb-2">{step.titre}</h3>
+                <p className="text-sm text-gray-600 leading-relaxed">{step.texte}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Group walks callout */}
+        <div className="mt-8 bg-forest-800 rounded-2xl p-8 flex flex-col sm:flex-row gap-6 items-start sm:items-center">
+          <div className="w-12 h-12 rounded-full bg-forest-700 flex items-center justify-center shrink-0 text-2xl">
+            🐾
+          </div>
+          <div className="flex-1">
+            <h3 className="font-serif font-bold text-white mb-1">Balades collectives encadrées</h3>
+            <p className="text-forest-200 text-sm leading-relaxed">
+              {"Un chien heureux est un chien qui rencontre ses congénères régulièrement. Je propose des balades collectives encadrées pour travailler la socialisation en groupe, avec une attention particulière au caractère de chaque chien pour que la meute soit harmonieuse."}
+            </p>
+          </div>
+          <Link
+            href="/reservation"
+            className="shrink-0 px-5 py-2.5 rounded-full bg-amber-warm text-white text-sm font-semibold hover:bg-amber-600 transition-colors"
+          >
+            Se renseigner
+          </Link>
+        </div>
+      </div>
+
+      {/* Divider */}
+      <div className="max-w-4xl mx-auto px-4 sm:px-6">
+        <div className="border-t border-gray-200" />
+      </div>
+
+      {/* Pricing plans */}
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="text-center mb-12">
+          <p className="text-amber-warm font-semibold text-sm uppercase tracking-widest mb-2">Investissement</p>
+          <h2 className="text-3xl font-serif font-bold text-forest-800">Nos tarifs</h2>
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {(plans ?? []).map((plan: {
             plan_title: prismic.KeyTextField
@@ -105,16 +199,16 @@ export default async function PrixPage() {
                   </div>
                 )}
 
-                <h2 className={`text-xl font-serif font-bold mb-2 ${featured ? 'text-white' : 'text-forest-800'}`}>
+                <h3 className={`text-xl font-serif font-bold mb-2 ${featured ? 'text-white' : 'text-forest-800'}`}>
                   {plan.plan_title}
-                </h2>
+                </h3>
 
                 <p className={`text-4xl font-bold font-serif mb-6 ${featured ? 'text-amber-warm' : 'text-forest-700'}`}>
                   {plan.plan_price}
                 </p>
 
                 {prismic.isFilled.richText(plan.plan_description) && (
-                  <div className={`flex-1 text-sm leading-relaxed space-y-2 mb-8 ${featured ? '[&_p]:text-forest-200 [&_li]:text-forest-200' : '[&_p]:text-gray-600 [&_li]:text-gray-600'} [&_li]:flex [&_li]:items-center [&_li]:gap-2`}>
+                  <div className={`flex-1 text-sm leading-relaxed space-y-2 mb-8 ${featured ? '[&_p]:text-forest-200 [&_li]:text-forest-200' : '[&_p]:text-gray-600 [&_li]:text-gray-600'}`}>
                     <PrismicRichText
                       field={plan.plan_description}
                       components={{
@@ -144,7 +238,6 @@ export default async function PrixPage() {
           })}
         </div>
 
-        {/* Note */}
         <p className="text-center text-sm text-gray-500 mt-10">
           Tous les cours se déroulent à domicile ou dans un lieu adapté près de chez vous.
           Frais de déplacement inclus dans le secteur de Coutançais et Granvillais.
@@ -154,9 +247,11 @@ export default async function PrixPage() {
       {/* CTA strip */}
       <div className="bg-amber-light py-12 px-4 text-center">
         <h2 className="text-2xl font-serif font-bold text-forest-800 mb-2">
-          Une question sur les tarifs ?
+          Une question sur les tarifs ou la méthode ?
         </h2>
-        <p className="text-gray-600 mb-6">N'hésitez pas à me contacter directement.</p>
+        <p className="text-gray-600 mb-6">
+          {"N'hésitez pas à me contacter directement — je réponds à toutes les questions avant de prendre rendez-vous."}
+        </p>
         <Link
           href="/reservation"
           className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-forest-700 text-white font-semibold hover:bg-forest-800 transition-colors"
@@ -169,8 +264,8 @@ export default async function PrixPage() {
       </div>
 
       <FaqSection
-        title="Questions sur les tarifs"
-        items={PRIX_FAQ}
+        title="Questions fréquentes"
+        items={faqItems}
         schemaId="schema-faq-prix"
       />
     </div>

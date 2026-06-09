@@ -61,6 +61,28 @@
         }
       }
     },
+    "Q&A": {
+      "faq": {
+        "type": "Group",
+        "config": {
+          "label": "Questions fréquentes",
+          "fields": {
+            "question": {
+              "type": "Text",
+              "config": {
+                "label": "Question"
+              }
+            },
+            "reponse": {
+              "type": "Text",
+              "config": {
+                "label": "Réponse"
+              }
+            }
+          }
+        }
+      }
+    },
     "SEO & Metadata": {
       "meta_title": {
         "type": "Text",

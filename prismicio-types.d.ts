@@ -854,6 +854,21 @@ export interface PricingDocumentDataPlansItem {
 }
 
 /**
+ * Item in *Pricing → Questions fréquentes*
+ */
+export interface PricingDocumentDataFaqItem {
+	/**
+	 * Question field in *Pricing → Questions fréquentes*
+	 */
+	question: prismic.KeyTextField;
+
+	/**
+	 * Réponse field in *Pricing → Questions fréquentes*
+	 */
+	reponse: prismic.KeyTextField;
+}
+
+/**
  * Content for Pricing documents
  */
 interface PricingDocumentData {
@@ -888,7 +903,16 @@ interface PricingDocumentData {
 	 * - **Tab**: Main
 	 * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
 	 */
-	plans: prismic.GroupField<Simplify<PricingDocumentDataPlansItem>>;/**
+	plans: prismic.GroupField<Simplify<PricingDocumentDataPlansItem>>;
+
+	/**
+	 * FAQ field in *Pricing*
+	 *
+	 * - **Field Type**: Group
+	 * - **API ID Path**: pricing.faq[]
+	 * - **Tab**: Q&A
+	 */
+	faq: prismic.GroupField<Simplify<PricingDocumentDataFaqItem>>;/**
 	 * Meta Title field in *Pricing*
 	 *
 	 * - **Field Type**: Text
@@ -1642,6 +1666,7 @@ declare module "@prismicio/client" {
 			PricingDocument,
 			PricingDocumentData,
 			PricingDocumentDataPlansItem,
+			PricingDocumentDataFaqItem,
 			ReservationDocument,
 			ReservationDocumentData,
 			RaceDocument,
