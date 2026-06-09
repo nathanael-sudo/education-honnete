@@ -95,6 +95,10 @@ export default function Header({ layout, cityPages = [] }: { layout: LayoutDoc; 
               Blog
             </Link>
 
+            <Link href="/recommandations" className="text-sm font-medium text-gray-600 hover:text-forest-700 transition-colors">
+              Avis
+            </Link>
+
             <Link href="/a-propos" className="text-sm font-medium text-gray-600 hover:text-forest-700 transition-colors">
               À propos
             </Link>
@@ -182,6 +186,10 @@ export default function Header({ layout, cityPages = [] }: { layout: LayoutDoc; 
 
             <Link href="/blog" className="py-2 text-sm font-medium text-gray-700 hover:text-forest-700" onClick={() => setOpen(false)}>
               Blog
+            </Link>
+
+            <Link href="/recommandations" className="py-2 text-sm font-medium text-gray-700 hover:text-forest-700" onClick={() => setOpen(false)}>
+              Avis
             </Link>
 
             <Link href="/a-propos" className="py-2 text-sm font-medium text-gray-700 hover:text-forest-700" onClick={() => setOpen(false)}>
