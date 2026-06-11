@@ -699,6 +699,15 @@ export interface LayoutDocumentDataNavigationLinksItem {
  */
 interface LayoutDocumentData {
 	/**
+	 * Logo field in *Layout*
+	 *
+	 * - **Field Type**: Image
+	 * - **API ID Path**: layout.logo
+	 * - **Tab**: Main
+	 */
+	logo: prismic.ImageField<never>;
+
+	/**
 	 * Site Name field in *Layout*
 	 *
 	 * - **Field Type**: Text

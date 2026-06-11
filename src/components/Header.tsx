@@ -1,10 +1,12 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { useState } from 'react'
 import * as prismic from '@prismicio/client'
 
 type LayoutDoc = prismic.PrismicDocument<{
+  logo: prismic.ImageField
   site_name: prismic.KeyTextField
   navigation_links: prismic.GroupField<{
     label: prismic.KeyTextField
@@ -33,7 +35,7 @@ function resolveLink(link: prismic.LinkField): string {
 export default function Header({ layout, cityPages = [] }: { layout: LayoutDoc; cityPages?: CityPage[] }) {
   const [open, setOpen] = useState(false)
   const [zonesOpen, setZonesOpen] = useState(false)
-  const { site_name, navigation_links, cta_button_label, cta_button_link } = layout.data
+  const { logo, site_name, navigation_links, cta_button_label, cta_button_link } = layout.data
 
   return (
     <header className="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-gray-100 shadow-sm">
@@ -41,10 +43,23 @@ export default function Header({ layout, cityPages = [] }: { layout: LayoutDoc; 
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 shrink-0">
-            <span className="text-2xl">🐾</span>
-            <span className="font-serif text-lg font-semibold text-forest-800">
-              {site_name ?? 'Éducation Honnête'}
-            </span>
+            {prismic.isFilled.image(logo) ? (
+              <Image
+                src={logo.url!}
+                alt={logo.alt ?? (site_name ?? 'Éducation Honnête')}
+                width={logo.dimensions?.width ?? 160}
+                height={logo.dimensions?.height ?? 40}
+                className="h-10 w-auto object-contain"
+                priority
+              />
+            ) : (
+              <>
+                <span className="text-2xl">🐾</span>
+                <span className="font-serif text-lg font-semibold text-forest-800">
+                  {site_name ?? 'Éducation Honnête'}
+                </span>
+              </>
+            )}
           </Link>
 
           {/* Desktop nav */}
