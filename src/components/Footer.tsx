@@ -13,6 +13,8 @@ type LayoutDoc = prismic.PrismicDocument<{
   copyright: prismic.KeyTextField
 }>
 
+type BreedPage = prismic.PrismicDocument<{ nom: prismic.KeyTextField }>
+
 function SocialLink({ href, label, children }: { href: string; label: string; children: React.ReactNode }) {
   return (
     <a
@@ -27,7 +29,7 @@ function SocialLink({ href, label, children }: { href: string; label: string; ch
   )
 }
 
-export default function Footer({ layout }: { layout: LayoutDoc }) {
+export default function Footer({ layout, breedPages = [] }: { layout: LayoutDoc; breedPages?: BreedPage[] }) {
   const { logo, site_name, footer_text, facebook_url, instagram_url, youtube_url, copyright } = layout.data
 
   const fbUrl = prismic.isFilled.link(facebook_url) ? (facebook_url as prismic.FilledLinkToWebField).url : null
@@ -37,7 +39,8 @@ export default function Footer({ layout }: { layout: LayoutDoc }) {
   return (
     <footer className="bg-forest-900 text-forest-100">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+
           {/* Brand */}
           <div>
             <div className="flex items-center gap-2 mb-4">
@@ -91,8 +94,10 @@ export default function Footer({ layout }: { layout: LayoutDoc }) {
               {[
                 ['Accueil', '/'],
                 ['Cas pratiques', '/cas-pratiques-education-canine'],
+                ['Races', '/races'],
                 ['Avis clients', '/recommandations'],
                 ['Tarifs', '/prix'],
+                ['À propos', '/a-propos'],
                 ['Réservation', '/reservation'],
               ].map(([label, href]) => (
                 <li key={href}>
@@ -104,12 +109,32 @@ export default function Footer({ layout }: { layout: LayoutDoc }) {
             </ul>
           </div>
 
+          {/* Races */}
+          {breedPages.length > 0 && (
+            <div>
+              <h3 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">Races</h3>
+              <ul className="space-y-2 text-sm">
+                {breedPages.map((breed) => (
+                  <li key={breed.uid}>
+                    <Link
+                      href={`/races/${breed.uid}`}
+                      className="text-forest-300 hover:text-white transition-colors"
+                    >
+                      {breed.data.nom ?? breed.uid}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
           {/* Footer text */}
           {prismic.isFilled.richText(footer_text) && (
             <div className="text-sm text-forest-300 leading-relaxed">
               <PrismicRichText field={footer_text} />
             </div>
           )}
+
         </div>
 
         <div className="mt-10 pt-6 border-t border-forest-700 text-center text-xs text-forest-400">

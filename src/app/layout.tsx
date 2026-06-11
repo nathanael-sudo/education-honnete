@@ -46,10 +46,13 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const client = createClient()
-  const [layout, cityPages] = await Promise.all([
+  const [layout, cityPages, breedPages] = await Promise.all([
     client.getSingle('layout'),
     client.getAllByType('city_page', {
       orderings: [{ field: 'my.city_page.city_name', direction: 'asc' }],
+    }).catch(() => []),
+    client.getAllByType('race', {
+      orderings: [{ field: 'my.race.nom', direction: 'asc' }],
     }).catch(() => []),
   ])
 
@@ -68,7 +71,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <Header layout={layout as any} cityPages={cityPages as any} />
         <main className="flex-1">{children}</main>
         {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-        <Footer layout={layout as any} />
+        <Footer layout={layout as any} breedPages={breedPages as any} />
       </body>
     </html>
   )
