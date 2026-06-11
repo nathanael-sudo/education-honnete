@@ -620,15 +620,7 @@ interface CityPageDocumentData {
  */
 export type CityPageDocument<Lang extends string = string> = prismic.PrismicDocumentWithUID<Simplify<CityPageDocumentData>, "city_page", Lang>;
 
-/**
- * Item in *Homepage → Questions fréquentes*
- */
-export interface HomepageDocumentDataFaqItem {
-	question: prismic.KeyTextField;
-	reponse: prismic.KeyTextField;
-}
-
-type HomepageDocumentDataSlicesSlice = HeroSlice | ContentSlice | EducatorPresentationSlice | FeaturedCaseStudiesSlice | CtaSlice
+type HomepageDocumentDataSlicesSlice = HeroSlice | ContentSlice | EducatorPresentationSlice | FeaturedCaseStudiesSlice | CtaSlice | FaqSectionSlice
 
 /**
  * Content for Homepage documents
@@ -643,8 +635,7 @@ interface HomepageDocumentData {
 	 * - **Tab**: Main
 	 * - **Documentation**: https://prismic.io/docs/slices
 	 */
-	slices: prismic.SliceZone<HomepageDocumentDataSlicesSlice>;
-	faq: prismic.GroupField<Simplify<HomepageDocumentDataFaqItem>>;/**
+	slices: prismic.SliceZone<HomepageDocumentDataSlicesSlice>;/**
 	 * Meta Title field in *Homepage*
 	 *
 	 * - **Field Type**: Text
@@ -1228,6 +1219,27 @@ export type AboutDocument<Lang extends string = string> = prismic.PrismicDocumen
 export type AllDocumentTypes = AboutDocument | BlogPostDocument | CaseStudyDocument | CityPageDocument | HomepageDocument | LayoutDocument | PricingDocument | RaceDocument | ReservationDocument;
 
 /**
+ * Primary content in *FAQ Section → Default → Primary*
+ */
+export interface FaqSectionSliceDefaultPrimary {
+	titre: prismic.KeyTextField;
+}
+
+/**
+ * Item in *FAQ Section → Default → Items*
+ */
+export interface FaqSectionSliceDefaultItem {
+	question: prismic.KeyTextField;
+	reponse: prismic.KeyTextField;
+}
+
+export type FaqSectionSliceDefault = prismic.SharedSliceVariation<"default", Simplify<FaqSectionSliceDefaultPrimary>, Simplify<FaqSectionSliceDefaultItem>>;
+
+type FaqSectionSliceVariation = FaqSectionSliceDefault;
+
+export type FaqSectionSlice = prismic.SharedSlice<"faq_section", FaqSectionSliceVariation>;
+
+/**
  * Primary content in *Content → Default → Primary*
  */
 export interface ContentSliceDefaultPrimary {
@@ -1740,7 +1752,12 @@ declare module "@prismicio/client" {
 			RaceDocumentData,
 			RaceDocumentDataFaqItem,
 			AllDocumentTypes,
-			ContentSlice,
+			FaqSectionSlice,
+				FaqSectionSliceDefault,
+				FaqSectionSliceDefaultPrimary,
+				FaqSectionSliceDefaultItem,
+				FaqSectionSliceVariation,
+				ContentSlice,
 			ContentSliceDefaultPrimary,
 			ContentSliceVariation,
 			ContentSliceDefault,

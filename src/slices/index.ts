@@ -3,6 +3,7 @@
 import Content from "./Content";
 import Cta from "./Cta";
 import EducatorPresentation from "./EducatorPresentation";
+import FaqSection from "./FaqSection";
 import FeaturedCaseStudies from "./FeaturedCaseStudies";
 import Hero from "./Hero";
 import ImageText from "./ImageText";
@@ -12,6 +13,7 @@ export const components = {
 	content: Content,
 	cta: Cta,
 	educator_presentation: EducatorPresentation,
+	faq_section: FaqSection,
 	featured_case_studies: FeaturedCaseStudies,
 	hero: Hero,
 	image_text: ImageText,

@@ -9,39 +9,12 @@
         "fieldset": "Slice Zone",
         "config": {
           "choices": {
-            "hero": {
-              "type": "SharedSlice"
-            },
-            "content": {
-              "type": "SharedSlice"
-            },
-            "educator_presentation": {
-              "type": "SharedSlice"
-            },
-            "featured_case_studies": {
-              "type": "SharedSlice"
-            },
-            "cta": {
-              "type": "SharedSlice"
-            }
-          }
-        }
-      }
-    },
-    "Q&A": {
-      "faq": {
-        "type": "Group",
-        "config": {
-          "label": "Questions fréquentes",
-          "fields": {
-            "question": {
-              "type": "Text",
-              "config": { "label": "Question" }
-            },
-            "reponse": {
-              "type": "Text",
-              "config": { "label": "Réponse" }
-            }
+            "hero": { "type": "SharedSlice" },
+            "content": { "type": "SharedSlice" },
+            "educator_presentation": { "type": "SharedSlice" },
+            "featured_case_studies": { "type": "SharedSlice" },
+            "cta": { "type": "SharedSlice" },
+            "faq_section": { "type": "SharedSlice" }
           }
         }
       }

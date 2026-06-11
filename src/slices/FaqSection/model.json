@@ -1,0 +1,39 @@
+{
+  "id": "faq_section",
+  "type": "SharedSlice",
+  "name": "FaqSection",
+  "description": "Section de questions fréquentes avec accordéon",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "description": "Default",
+      "imageUrl": "",
+      "docURL": "...",
+      "version": "initial",
+      "primary": {
+        "titre": {
+          "type": "Text",
+          "config": {
+            "label": "Titre de la section",
+            "placeholder": "Questions fréquentes"
+          }
+        }
+      },
+      "items": {
+        "question": {
+          "type": "Text",
+          "config": {
+            "label": "Question"
+          }
+        },
+        "reponse": {
+          "type": "Text",
+          "config": {
+            "label": "Réponse"
+          }
+        }
+      }
+    }
+  ]
+}
