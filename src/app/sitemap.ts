@@ -7,8 +7,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticPages: MetadataRoute.Sitemap = [
     { url: siteUrl, lastModified: new Date(), changeFrequency: 'weekly', priority: 1.0 },
     { url: `${siteUrl}/cas-pratiques-education-canine`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
-    { url: `${siteUrl}/blog`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
+    { url: `${siteUrl}/races`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${siteUrl}/recommandations`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
     { url: `${siteUrl}/prix`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${siteUrl}/a-propos`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
     { url: `${siteUrl}/reservation`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
   ]
 
@@ -23,11 +25,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }))
   } catch { /* ignore */ }
 
-  let blogPages: MetadataRoute.Sitemap = []
+  let breedPages: MetadataRoute.Sitemap = []
   try {
-    const posts = await client.getAllByType('blog_post')
-    blogPages = posts.map((doc) => ({
-      url: `${siteUrl}/blog/${doc.uid}`,
+    const breeds = await client.getAllByType('race')
+    breedPages = breeds.map((doc) => ({
+      url: `${siteUrl}/races/${doc.uid}`,
       lastModified: new Date(doc.last_publication_date),
       changeFrequency: 'monthly' as const,
       priority: 0.7,
@@ -45,5 +47,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }))
   } catch { /* ignore */ }
 
-  return [...staticPages, ...caseStudyPages, ...blogPages, ...cityPages]
+  return [...staticPages, ...caseStudyPages, ...breedPages, ...cityPages]
 }

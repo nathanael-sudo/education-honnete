@@ -1,7 +1,5 @@
 import { Metadata } from 'next'
-import Image from 'next/image'
 import Link from 'next/link'
-import * as prismic from '@prismicio/client'
 import { createClient, siteUrl } from '@/prismicio'
 import SliceZone from '@/components/SliceZone'
 import FaqSection from '@/components/FaqSection'
@@ -66,96 +64,9 @@ export default async function HomePage() {
   const client = createClient()
   const page = await client.getSingle('homepage')
 
-  let recentPosts: prismic.PrismicDocument[] = []
-  try {
-    recentPosts = await client.getAllByType('blog_post', {
-      orderings: [{ field: 'my.blog_post.publication_date', direction: 'desc' }],
-      limit: 3,
-    })
-  } catch {
-    // no blog posts yet
-  }
-
   return (
     <>
       <SliceZone slices={page.data.slices} />
-
-      {/* Blog preview section */}
-      {recentPosts.length > 0 && (
-        <section className="py-16 px-4 bg-white">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-12">
-              <p className="text-amber-warm font-semibold text-sm uppercase tracking-widest mb-2">Ressources</p>
-              <h2 className="text-3xl sm:text-4xl font-serif font-bold text-forest-800">
-                Conseils d'éducation canine
-              </h2>
-              <p className="mt-3 text-gray-600 max-w-xl mx-auto">
-                Ressources gratuites pour comprendre et accompagner votre chien au quotidien.
-              </p>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {recentPosts.map((post) => {
-                const imgUrl = prismic.isFilled.image(post.data.cover_image)
-                  ? post.data.cover_image.url
-                  : null
-                const firstNode = post.data.title?.[0] as { text?: string } | undefined
-                const titleText = firstNode?.text ?? (post.data.title as unknown as string) ?? ''
-                const date = post.data.publication_date
-                  ? new Date(post.data.publication_date).toLocaleDateString('fr-FR', {
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric',
-                    })
-                  : null
-                return (
-                  <Link
-                    key={post.uid}
-                    href={`/blog/${post.uid}`}
-                    className="group bg-cream rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-0.5 flex flex-col"
-                  >
-                    {imgUrl && (
-                      <div className="relative aspect-[16/9] overflow-hidden bg-forest-100">
-                        <Image
-                          src={imgUrl}
-                          alt={titleText}
-                          fill
-                          className="object-cover group-hover:scale-105 transition-transform duration-500"
-                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                        />
-                      </div>
-                    )}
-                    <div className="p-5 flex flex-col flex-1">
-                      {date && <p className="text-xs text-gray-400 mb-2">{date}</p>}
-                      <h3 className="font-serif font-bold text-forest-800 text-lg leading-snug group-hover:text-forest-600 transition-colors mb-2">
-                        {titleText}
-                      </h3>
-                      {post.data.excerpt && (
-                        <p className="text-sm text-gray-600 leading-relaxed line-clamp-3 flex-1">
-                          {post.data.excerpt}
-                        </p>
-                      )}
-                      <span className="mt-4 text-sm font-semibold text-forest-700 flex items-center gap-1">
-                        Lire l'article
-                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-                        </svg>
-                      </span>
-                    </div>
-                  </Link>
-                )
-              })}
-            </div>
-            <div className="text-center mt-10">
-              <Link
-                href="/blog"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full border-2 border-forest-700 text-forest-700 font-semibold hover:bg-forest-700 hover:text-white transition-colors text-sm"
-              >
-                Voir tous les articles
-              </Link>
-            </div>
-          </div>
-        </section>
-      )}
 
       {/* Zone d'intervention */}
       <section className="py-16 px-4 bg-forest-50">
