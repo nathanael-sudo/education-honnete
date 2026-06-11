@@ -1,8 +1,11 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
+import Image from 'next/image'
 import * as prismic from '@prismicio/client'
 import { PrismicRichText } from '@prismicio/react'
 import { createClient, siteUrl } from '@/prismicio'
+
+const MARIE_ANNE_AVATAR = 'https://images.prismic.io/education-honnete/aisfMqlQnVZVEOqs_Screenshot2026-06-11at22.48.33.png?auto=format,compress'
 
 export async function generateMetadata(): Promise<Metadata> {
   const client = createClient()
@@ -126,9 +129,13 @@ export default async function RecommandationsPage() {
             {prismic.isFilled.richText(review.response) && (
               <div className="border-t border-gray-100 bg-forest-50 px-6 py-4">
                 <div className="flex gap-3">
-                  <div className="w-8 h-8 rounded-full bg-forest-700 flex items-center justify-center shrink-0">
-                    <span className="text-white text-xs font-bold">🐾</span>
-                  </div>
+                  <Image
+                    src={MARIE_ANNE_AVATAR}
+                    alt="Marie-Anne Lamellière"
+                    width={32}
+                    height={32}
+                    className="w-8 h-8 rounded-full object-cover shrink-0"
+                  />
                   <div>
                     <p className="text-xs font-semibold text-forest-700 mb-1">Marie-Anne — Éducation Honnête</p>
                     <div className="text-sm text-gray-600 leading-relaxed [&_p]:mb-1 [&_p:last-child]:mb-0">
