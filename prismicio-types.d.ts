@@ -620,6 +620,14 @@ interface CityPageDocumentData {
  */
 export type CityPageDocument<Lang extends string = string> = prismic.PrismicDocumentWithUID<Simplify<CityPageDocumentData>, "city_page", Lang>;
 
+/**
+ * Item in *Homepage → Questions fréquentes*
+ */
+export interface HomepageDocumentDataFaqItem {
+	question: prismic.KeyTextField;
+	reponse: prismic.KeyTextField;
+}
+
 type HomepageDocumentDataSlicesSlice = HeroSlice | ContentSlice | EducatorPresentationSlice | FeaturedCaseStudiesSlice | CtaSlice
 
 /**
@@ -635,7 +643,8 @@ interface HomepageDocumentData {
 	 * - **Tab**: Main
 	 * - **Documentation**: https://prismic.io/docs/slices
 	 */
-	slices: prismic.SliceZone<HomepageDocumentDataSlicesSlice>;/**
+	slices: prismic.SliceZone<HomepageDocumentDataSlicesSlice>;
+	faq: prismic.GroupField<Simplify<HomepageDocumentDataFaqItem>>;/**
 	 * Meta Title field in *Homepage*
 	 *
 	 * - **Field Type**: Text

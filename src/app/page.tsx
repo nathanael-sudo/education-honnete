@@ -64,6 +64,14 @@ export default async function HomePage() {
   const client = createClient()
   const page = await client.getSingle('homepage')
 
+  const prismicFaq: { q: string; a: string }[] = (page.data.faq ?? [])
+    .filter((item: { question: string | null; reponse: string | null }) => item.question && item.reponse)
+    .map((item: { question: string | null; reponse: string | null }) => ({
+      q: item.question as string,
+      a: item.reponse as string,
+    }))
+  const faqItems = prismicFaq.length > 0 ? prismicFaq : HOMEPAGE_FAQ
+
   return (
     <>
       <SliceZone slices={page.data.slices} />
@@ -103,7 +111,7 @@ export default async function HomePage() {
       {/* FAQ */}
       <FaqSection
         title="Questions fréquentes"
-        items={HOMEPAGE_FAQ}
+        items={faqItems}
         schemaId="schema-faq-homepage"
       />
     </>
