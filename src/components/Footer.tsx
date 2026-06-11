@@ -1,8 +1,10 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import * as prismic from '@prismicio/client'
 import { PrismicRichText } from '@prismicio/react'
 
 type LayoutDoc = prismic.PrismicDocument<{
+  logo: prismic.ImageField
   site_name: prismic.KeyTextField
   footer_text: prismic.RichTextField
   facebook_url: prismic.LinkField
@@ -26,7 +28,7 @@ function SocialLink({ href, label, children }: { href: string; label: string; ch
 }
 
 export default function Footer({ layout }: { layout: LayoutDoc }) {
-  const { site_name, footer_text, facebook_url, instagram_url, youtube_url, copyright } = layout.data
+  const { logo, site_name, footer_text, facebook_url, instagram_url, youtube_url, copyright } = layout.data
 
   const fbUrl = prismic.isFilled.link(facebook_url) ? (facebook_url as prismic.FilledLinkToWebField).url : null
   const igUrl = prismic.isFilled.link(instagram_url) ? (instagram_url as prismic.FilledLinkToWebField).url : null
@@ -39,7 +41,17 @@ export default function Footer({ layout }: { layout: LayoutDoc }) {
           {/* Brand */}
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <span className="text-2xl">🐾</span>
+              {prismic.isFilled.image(logo) ? (
+                <Image
+                  src={logo.url!}
+                  alt={logo.alt ?? (site_name ?? 'Éducation Honnête')}
+                  width={logo.dimensions?.width ?? 160}
+                  height={logo.dimensions?.height ?? 40}
+                  className="h-10 w-auto object-contain brightness-0 invert"
+                />
+              ) : (
+                <span className="text-2xl">🐾</span>
+              )}
               <span className="font-serif text-lg font-semibold text-white">
                 {site_name ?? 'Éducation Honnête'}
               </span>
