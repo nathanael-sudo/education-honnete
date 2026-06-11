@@ -53,13 +53,11 @@ export default function Header({ layout, cityPages = [] }: { layout: LayoutDoc; 
                 priority
               />
             ) : (
-              <>
-                <span className="text-2xl">🐾</span>
-                <span className="font-serif text-lg font-semibold text-forest-800">
-                  {site_name ?? 'Éducation Honnête'}
-                </span>
-              </>
+              <span className="text-2xl">🐾</span>
             )}
+            <span className="font-serif text-lg font-semibold text-forest-800">
+              {site_name ?? 'Éducation Honnête'}
+            </span>
           </Link>
 
           {/* Desktop nav */}
