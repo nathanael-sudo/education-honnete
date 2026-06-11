@@ -1225,7 +1225,37 @@ interface AboutDocumentData {
  */
 export type AboutDocument<Lang extends string = string> = prismic.PrismicDocumentWithoutUID<Simplify<AboutDocumentData>, "about", Lang>;
 
-export type AllDocumentTypes = AboutDocument | BlogPostDocument | CaseStudyDocument | CityPageDocument | HomepageDocument | LayoutDocument | PricingDocument | RaceDocument | ReservationDocument;
+/**
+ * Item in *Recommandations → Avis clients*
+ */
+export interface RecommandationsDocumentDataReviewsItem {
+	name: prismic.KeyTextField;
+	dog_name: prismic.KeyTextField;
+	date: prismic.KeyTextField;
+	sort_date: prismic.KeyTextField;
+	text: prismic.RichTextField;
+	response: prismic.RichTextField;
+}
+
+/**
+ * Content for Recommandations documents
+ */
+interface RecommandationsDocumentData {
+	google_url: prismic.LinkField;
+	reviews: prismic.GroupField<Simplify<RecommandationsDocumentDataReviewsItem>>;
+	meta_title: prismic.KeyTextField;
+	meta_description: prismic.KeyTextField;
+}
+
+/**
+ * Recommandations document from Prismic
+ *
+ * - **API ID**: `recommandations`
+ * - **Repeatable**: `false`
+ */
+export type RecommandationsDocument<Lang extends string = string> = prismic.PrismicDocumentWithoutUID<Simplify<RecommandationsDocumentData>, "recommandations", Lang>;
+
+export type AllDocumentTypes = AboutDocument | BlogPostDocument | CaseStudyDocument | CityPageDocument | HomepageDocument | LayoutDocument | PricingDocument | RaceDocument | RecommandationsDocument | ReservationDocument;
 
 /**
  * Primary content in *FAQ Section → Default → Primary*

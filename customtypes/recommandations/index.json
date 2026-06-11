@@ -1,0 +1,67 @@
+{
+  "id": "recommandations",
+  "label": "Recommandations",
+  "repeatable": false,
+  "status": true,
+  "format": "page",
+  "json": {
+    "Main": {
+      "google_url": {
+        "type": "Link",
+        "config": {
+          "label": "Lien Google (bouton Lire sur Google)",
+          "select": null,
+          "allowTargetBlank": true
+        }
+      },
+      "reviews": {
+        "type": "Group",
+        "config": {
+          "label": "Avis clients",
+          "fields": {
+            "name": {
+              "type": "Text",
+              "config": { "label": "Nom du client" }
+            },
+            "dog_name": {
+              "type": "Text",
+              "config": { "label": "Nom du chien (optionnel)" }
+            },
+            "date": {
+              "type": "Text",
+              "config": { "label": "Date (affichage)", "placeholder": "Mars 2026" }
+            },
+            "sort_date": {
+              "type": "Text",
+              "config": { "label": "Date (tri AAAA-MM)", "placeholder": "2026-03" }
+            },
+            "text": {
+              "type": "StructuredText",
+              "config": {
+                "label": "Texte de l'avis",
+                "multi": "paragraph,strong,em"
+              }
+            },
+            "response": {
+              "type": "StructuredText",
+              "config": {
+                "label": "Réponse de Marie-Anne (optionnel)",
+                "multi": "paragraph,strong,em"
+              }
+            }
+          }
+        }
+      }
+    },
+    "SEO & Metadata": {
+      "meta_title": {
+        "type": "Text",
+        "config": { "label": "Meta Title" }
+      },
+      "meta_description": {
+        "type": "Text",
+        "config": { "label": "Meta Description" }
+      }
+    }
+  }
+}
