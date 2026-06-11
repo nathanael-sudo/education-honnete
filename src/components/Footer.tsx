@@ -47,7 +47,7 @@ export default function Footer({ layout }: { layout: LayoutDoc }) {
                   alt={logo.alt ?? (site_name ?? 'Éducation Honnête')}
                   width={logo.dimensions?.width ?? 160}
                   height={logo.dimensions?.height ?? 40}
-                  className="h-10 w-auto object-contain brightness-0 invert"
+                  className="h-10 w-auto object-contain"
                 />
               ) : (
                 <span className="text-2xl">🐾</span>
