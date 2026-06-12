@@ -128,7 +128,6 @@ export default async function PrixPage() {
       {/* Pricing plans */}
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="text-center mb-12">
-          <p className="text-amber-warm font-semibold text-sm uppercase tracking-widest mb-2">Investissement</p>
           <h2 className="text-3xl font-serif font-bold text-forest-800">Nos tarifs</h2>
         </div>
 

@@ -77,6 +77,26 @@
         "config": {
           "label": "CTA — Description"
         }
+      },
+      "mosaic": {
+        "type": "Group",
+        "config": {
+          "label": "Mosaïque de photos",
+          "fields": {
+            "mosaic_image": {
+              "type": "Image",
+              "config": {
+                "label": "Photo"
+              }
+            },
+            "mosaic_caption": {
+              "type": "Text",
+              "config": {
+                "label": "Légende (optionnel)"
+              }
+            }
+          }
+        }
       }
     },
     "SEO & Metadata": {

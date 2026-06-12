@@ -3,6 +3,7 @@ import Link from 'next/link'
 import * as prismic from '@prismicio/client'
 import { PrismicRichText } from '@prismicio/react'
 import { createClient, siteUrl } from '@/prismicio'
+import PhotoMosaic from '@/components/PhotoMosaic'
 
 export async function generateMetadata(): Promise<Metadata> {
   const client = createClient()
@@ -41,7 +42,17 @@ const VALEUR_ICONS = [
 export default async function AProposPage() {
   const client = createClient()
   const page = await client.getSingle('about')
-  const { histoire, citation, philosophie_intro, philosophie_contenu, valeurs, credentials, cta_texte } = page.data
+  const { histoire, citation, philosophie_intro, philosophie_contenu, valeurs, credentials, mosaic, cta_texte } = page.data
+
+  const mosaicPhotos = (mosaic ?? [])
+    .filter((item: { mosaic_image: prismic.ImageField }) => prismic.isFilled.image(item.mosaic_image))
+    .map((item: { mosaic_image: prismic.ImageField; mosaic_caption: prismic.KeyTextField }) => ({
+      url: item.mosaic_image.url!,
+      alt: item.mosaic_image.alt ?? null,
+      caption: item.mosaic_caption ?? null,
+      width: item.mosaic_image.dimensions!.width,
+      height: item.mosaic_image.dimensions!.height,
+    }))
 
   return (
     <div className="bg-cream min-h-screen">
@@ -140,6 +151,8 @@ export default async function AProposPage() {
         )}
 
       </div>
+
+      <PhotoMosaic photos={mosaicPhotos} />
 
       {/* CTA */}
       <div className="bg-forest-800 py-14 px-4 text-center">

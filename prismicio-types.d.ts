@@ -97,6 +97,31 @@ export interface AboutDocumentDataCredentialsItem {
 }
 
 /**
+ * Item in *About → Mosaïque de photos*
+ */
+export interface AboutDocumentDataMosaicItem {
+	/**
+	 * Photo field in *About → Mosaïque de photos*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: about.mosaic[].mosaic_image
+	 * - **Documentation**: https://prismic.io/docs/fields/image
+	 */
+	mosaic_image: prismic.ImageField<never>;
+	
+	/**
+	 * Légende (optionnel) field in *About → Mosaïque de photos*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: about.mosaic[].mosaic_caption
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	mosaic_caption: prismic.KeyTextField;
+}
+
+/**
  * Content for About documents
  */
 interface AboutDocumentData {
@@ -175,7 +200,18 @@ interface AboutDocumentData {
 	 * - **Tab**: Main
 	 * - **Documentation**: https://prismic.io/docs/fields/text
 	 */
-	cta_texte: prismic.KeyTextField;/**
+	cta_texte: prismic.KeyTextField;
+	
+	/**
+	 * Mosaïque de photos field in *About*
+	 *
+	 * - **Field Type**: Group
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: about.mosaic[]
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+	 */
+	mosaic: prismic.GroupField<Simplify<AboutDocumentDataMosaicItem>>;/**
 	 * Meta Title field in *About*
 	 *
 	 * - **Field Type**: Text
@@ -2282,6 +2318,7 @@ declare module "@prismicio/client" {
 			AboutDocumentData,
 			AboutDocumentDataValeursItem,
 			AboutDocumentDataCredentialsItem,
+			AboutDocumentDataMosaicItem,
 			BlogPostDocument,
 			BlogPostDocumentData,
 			BlogPostDocumentDataSlicesSlice,
