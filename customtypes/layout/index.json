@@ -103,6 +103,18 @@
           "label": "Copyright",
           "placeholder": "© 2024 Éducation Honnête"
         }
+      },
+      "contact_name": {
+        "type": "Text",
+        "config": {
+          "label": "Contact — Nom"
+        }
+      },
+      "contact_phone": {
+        "type": "Text",
+        "config": {
+          "label": "Contact — Téléphone"
+        }
       }
     }
   },

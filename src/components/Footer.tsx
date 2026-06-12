@@ -7,6 +7,8 @@ type LayoutDoc = prismic.PrismicDocument<{
   logo: prismic.ImageField
   site_name: prismic.KeyTextField
   footer_text: prismic.RichTextField
+  contact_name: prismic.KeyTextField
+  contact_phone: prismic.KeyTextField
   facebook_url: prismic.LinkField
   instagram_url: prismic.LinkField
   youtube_url: prismic.LinkField
@@ -30,7 +32,7 @@ function SocialLink({ href, label, children }: { href: string; label: string; ch
 }
 
 export default function Footer({ layout, breedPages = [] }: { layout: LayoutDoc; breedPages?: BreedPage[] }) {
-  const { logo, site_name, footer_text, facebook_url, instagram_url, youtube_url, copyright } = layout.data
+  const { logo, site_name, footer_text, contact_name, contact_phone, facebook_url, instagram_url, youtube_url, copyright } = layout.data
 
   const fbUrl = prismic.isFilled.link(facebook_url) ? (facebook_url as prismic.FilledLinkToWebField).url : null
   const igUrl = prismic.isFilled.link(instagram_url) ? (instagram_url as prismic.FilledLinkToWebField).url : null
@@ -128,12 +130,18 @@ export default function Footer({ layout, breedPages = [] }: { layout: LayoutDoc;
             </div>
           )}
 
-          {/* Footer text */}
-          {prismic.isFilled.richText(footer_text) && (
-            <div className="text-sm text-forest-300 leading-relaxed">
+          {/* Footer text + contact */}
+          <div className="text-sm text-forest-300 leading-relaxed space-y-3">
+            {(contact_name || contact_phone) && (
+              <p>
+                {contact_name && <span className="block text-white font-medium">{contact_name}</span>}
+                {contact_phone && <span className="block">{contact_phone}</span>}
+              </p>
+            )}
+            {prismic.isFilled.richText(footer_text) && (
               <PrismicRichText field={footer_text} />
-            </div>
-          )}
+            )}
+          </div>
 
         </div>
 

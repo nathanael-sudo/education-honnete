@@ -1131,6 +1131,28 @@ interface LayoutDocumentData {
 	 * - **Documentation**: https://prismic.io/docs/fields/text
 	 */
 	copyright: prismic.KeyTextField;
+	
+	/**
+	 * Contact — Nom field in *Layout*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: layout.contact_name
+	 * - **Tab**: Footer
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	contact_name: prismic.KeyTextField;
+	
+	/**
+	 * Contact — Téléphone field in *Layout*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: layout.contact_phone
+	 * - **Tab**: Footer
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	contact_phone: prismic.KeyTextField;
 }
 
 /**
