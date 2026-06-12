@@ -36,18 +36,20 @@ export default function VideoCarousel({ videos }: { videos: CarouselVideo[] }) {
     const el = scrollRef.current
     if (!el) return
     const card = el.querySelector<HTMLElement>('[data-card]')
-    const step = card ? card.offsetWidth + 12 : 200
+    const step = card ? card.offsetWidth + 20 : 200
     el.scrollBy({ left: dir === 'left' ? -step : step, behavior: 'smooth' })
   }
 
   if (videos.length === 0) return null
 
+  const isOverflowing = canScrollLeft || canScrollRight
+
   return (
     <div className="relative">
-      {/* Scroll track */}
+      {/* Scroll track — left-aligned on mobile, centered on desktop only when all cards fit */}
       <div
         ref={scrollRef}
-        className="flex justify-center gap-3 overflow-x-auto snap-x snap-mandatory"
+        className={`flex gap-5 overflow-x-auto snap-x snap-mandatory${!isOverflowing ? ' sm:justify-center' : ''}`}
         style={{ scrollbarWidth: 'none' }}
       >
         {videos.map((v, i) => (
