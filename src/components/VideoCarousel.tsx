@@ -47,11 +47,11 @@ export default function VideoCarousel({ videos }: { videos: CarouselVideo[] }) {
       {/* Scroll track */}
       <div
         ref={scrollRef}
-        className="flex gap-3 overflow-x-auto snap-x snap-mandatory"
+        className="flex justify-center gap-3 overflow-x-auto snap-x snap-mandatory"
         style={{ scrollbarWidth: 'none' }}
       >
         {videos.map((v, i) => (
-          <div key={i} data-card className="flex-none w-40 sm:w-48 snap-start">
+          <div key={i} data-card className="flex-none w-60 sm:w-72 snap-start">
             <div className="aspect-[9/16] rounded-xl overflow-hidden bg-forest-900 shadow-md">
               <video
                 src={v.url}
