@@ -1,0 +1,55 @@
+{
+  "id": "case_studies_page",
+  "label": "Cas pratiques — Page",
+  "repeatable": false,
+  "status": true,
+  "format": "custom",
+  "json": {
+    "Main": {
+      "hero_eyebrow": {
+        "type": "Text",
+        "config": {
+          "label": "Hero — Surtitre"
+        }
+      },
+      "hero_title": {
+        "type": "Text",
+        "config": {
+          "label": "Hero — Titre"
+        }
+      },
+      "hero_description": {
+        "type": "Text",
+        "config": {
+          "label": "Hero — Description"
+        }
+      },
+      "card_cta_label": {
+        "type": "Text",
+        "config": {
+          "label": "Carte — Libellé du lien"
+        }
+      },
+      "empty_state_text": {
+        "type": "Text",
+        "config": {
+          "label": "Message liste vide"
+        }
+      }
+    },
+    "SEO & Metadata": {
+      "meta_title": {
+        "type": "Text",
+        "config": {
+          "label": "Meta Title"
+        }
+      },
+      "meta_description": {
+        "type": "Text",
+        "config": {
+          "label": "Meta Description"
+        }
+      }
+    }
+  }
+}

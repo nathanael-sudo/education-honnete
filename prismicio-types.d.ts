@@ -388,6 +388,97 @@ interface BlogPostDocumentData {
 export type BlogPostDocument<Lang extends string = string> = prismic.PrismicDocumentWithUID<Simplify<BlogPostDocumentData>, "blog_post", Lang>;
 
 /**
+ * Content for Cas pratiques — Page documents
+ */
+interface CaseStudiesPageDocumentData {
+	/**
+	 * Hero — Surtitre field in *Cas pratiques — Page*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: case_studies_page.hero_eyebrow
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	hero_eyebrow: prismic.KeyTextField;
+	
+	/**
+	 * Hero — Titre field in *Cas pratiques — Page*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: case_studies_page.hero_title
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	hero_title: prismic.KeyTextField;
+	
+	/**
+	 * Hero — Description field in *Cas pratiques — Page*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: case_studies_page.hero_description
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	hero_description: prismic.KeyTextField;
+	
+	/**
+	 * Carte — Libellé du lien field in *Cas pratiques — Page*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: case_studies_page.card_cta_label
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	card_cta_label: prismic.KeyTextField;
+	
+	/**
+	 * Message liste vide field in *Cas pratiques — Page*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: case_studies_page.empty_state_text
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	empty_state_text: prismic.KeyTextField;/**
+	 * Meta Title field in *Cas pratiques — Page*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: case_studies_page.meta_title
+	 * - **Tab**: SEO & Metadata
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	meta_title: prismic.KeyTextField;
+	
+	/**
+	 * Meta Description field in *Cas pratiques — Page*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: case_studies_page.meta_description
+	 * - **Tab**: SEO & Metadata
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	meta_description: prismic.KeyTextField;
+}
+
+/**
+ * Cas pratiques — Page document from Prismic
+ *
+ * - **API ID**: `case_studies_page`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type CaseStudiesPageDocument<Lang extends string = string> = prismic.PrismicDocumentWithoutUID<Simplify<CaseStudiesPageDocumentData>, "case_studies_page", Lang>;
+
+/**
  * Item in *Case Study → Photo Carousel*
  */
 export interface CaseStudyDocumentDataPhotoCarouselItem {
@@ -1641,7 +1732,7 @@ interface ReservationDocumentData {
  */
 export type ReservationDocument<Lang extends string = string> = prismic.PrismicDocumentWithoutUID<Simplify<ReservationDocumentData>, "reservation", Lang>;
 
-export type AllDocumentTypes = AboutDocument | BlogPostDocument | CaseStudyDocument | CityPageDocument | HomepageDocument | LayoutDocument | PricingDocument | RaceDocument | RecommandationsDocument | ReservationDocument;
+export type AllDocumentTypes = AboutDocument | BlogPostDocument | CaseStudiesPageDocument | CaseStudyDocument | CityPageDocument | HomepageDocument | LayoutDocument | PricingDocument | RaceDocument | RecommandationsDocument | ReservationDocument;
 
 /**
  * Primary content in *Content → Default → Primary*
@@ -2196,6 +2287,8 @@ declare module "@prismicio/client" {
 			BlogPostDocumentDataSlicesSlice,
 			BlogPostDocumentDataTagsItem,
 			BlogPostDocumentDataRelatedCaseStudiesItem,
+			CaseStudiesPageDocument,
+			CaseStudiesPageDocumentData,
 			CaseStudyDocument,
 			CaseStudyDocumentData,
 			CaseStudyDocumentDataPhotoCarouselItem,

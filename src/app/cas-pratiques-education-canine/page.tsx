@@ -2,34 +2,48 @@ import { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import * as prismic from '@prismicio/client'
-import { createClient } from '@/prismicio'
+import { createClient, siteUrl } from '@/prismicio'
 
-export const metadata: Metadata = {
-  title: 'Cas pratiques – Éducation Honnête',
-  description: 'Découvrez les chiens accompagnés par Marie-Anne Lamellière, éducatrice canine en Normandie.',
+export async function generateMetadata(): Promise<Metadata> {
+  const client = createClient()
+  const page = await client.getSingle('case_studies_page').catch(() => null)
+  const pageUrl = `${siteUrl}/cas-pratiques-education-canine`
+  const title = page?.data.meta_title ?? 'Cas pratiques – Éducation Honnête'
+  const description = page?.data.meta_description ?? 'Découvrez les chiens accompagnés par Marie-Anne Lamellière, éducatrice canine en Normandie.'
+  return {
+    title,
+    description,
+    alternates: { canonical: pageUrl },
+    openGraph: { title, description, url: pageUrl },
+  }
 }
 
 export default async function CasPratiquesPage() {
   const client = createClient()
-  const caseStudies = await client.getAllByType('case_study', {
-    fetchLinks: ['race.nom'],
-  })
+  const [caseStudies, page] = await Promise.all([
+    client.getAllByType('case_study', { fetchLinks: ['race.nom'] }),
+    client.getSingle('case_studies_page').catch(() => null),
+  ])
+
+  const heroEyebrow = page?.data.hero_eyebrow ?? 'Témoignages'
+  const heroTitle = page?.data.hero_title ?? 'Cas pratiques'
+  const heroDescription = page?.data.hero_description ?? 'Chaque chien a son histoire. Découvrez les transformations vécues par nos binômes maître·sse–chien.'
+  const cardCtaLabel = page?.data.card_cta_label ?? 'Lire le cas pratique'
+  const emptyStateText = page?.data.empty_state_text ?? 'Aucun cas pratique publié pour le moment.'
 
   return (
     <div className="bg-cream min-h-screen">
       <div className="bg-forest-800 py-16 px-4">
         <div className="max-w-6xl mx-auto text-center">
-          <p className="text-amber-warm font-semibold text-sm uppercase tracking-widest mb-3">Témoignages</p>
-          <h1 className="text-4xl sm:text-5xl font-serif font-bold text-white">Cas pratiques</h1>
-          <p className="mt-4 text-forest-200 text-lg max-w-xl mx-auto">
-            Chaque chien a son histoire. Découvrez les transformations vécues par nos binômes maître·sse–chien.
-          </p>
+          <p className="text-amber-warm font-semibold text-sm uppercase tracking-widest mb-3">{heroEyebrow}</p>
+          <h1 className="text-4xl sm:text-5xl font-serif font-bold text-white">{heroTitle}</h1>
+          <p className="mt-4 text-forest-200 text-lg max-w-xl mx-auto">{heroDescription}</p>
         </div>
       </div>
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         {caseStudies.length === 0 ? (
-          <p className="text-center text-gray-500 py-20">Aucun cas pratique publié pour le moment.</p>
+          <p className="text-center text-gray-500 py-20">{emptyStateText}</p>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {caseStudies.map((cs) => {
@@ -91,7 +105,7 @@ export default async function CasPratiquesPage() {
                     )}
 
                     <div className="mt-5 text-sm font-semibold text-forest-700 flex items-center gap-1.5">
-                      Lire le cas pratique
+                      {cardCtaLabel}
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
                       </svg>
