@@ -26,7 +26,9 @@
           "customtypes": [
             {
               "id": "race",
-              "fields": ["nom"]
+              "fields": [
+                "nom"
+              ]
             }
           ]
         }
@@ -159,6 +161,27 @@
           "placeholder": "Client review",
           "multi": "paragraph,strong,em",
           "allowTargetBlank": true
+        }
+      },
+      "video_carousel": {
+        "type": "Group",
+        "config": {
+          "label": "Video Carousel",
+          "fields": {
+            "video_file": {
+              "type": "Link",
+              "config": {
+                "label": "Video (MP4)",
+                "select": "media"
+              }
+            },
+            "video_caption": {
+              "type": "Text",
+              "config": {
+                "label": "Caption"
+              }
+            }
+          }
         }
       }
     },

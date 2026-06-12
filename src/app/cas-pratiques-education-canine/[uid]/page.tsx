@@ -8,6 +8,7 @@ import { PrismicRichText } from '@prismicio/react'
 import { createClient, siteUrl } from '@/prismicio'
 import { articleSchema } from '@/lib/structured-data'
 import PhotoCarousel from '@/components/PhotoCarousel'
+import VideoCarousel from '@/components/VideoCarousel'
 
 type Props = { params: { uid: string } }
 
@@ -89,7 +90,7 @@ export default async function CaseStudyPage({ params }: Props) {
     dog_name, dog_breed, dog_portrait, location, training_duration,
     initial_problem_title, initial_problem_content,
     educator_approach_title, educator_approach_content,
-    photo_carousel,
+    video_carousel, photo_carousel,
     results_title, results_content,
     testimonial_title, testimonial_owner_name, testimonial_owner_location,
     testimonial_rating, testimonial_content,
@@ -100,6 +101,13 @@ export default async function CaseStudyPage({ params }: Props) {
   const pageUrl = `${siteUrl}/cas-pratiques-education-canine/${params.uid}`
   const headline = `${dog_name ?? 'Cas pratique'} – ${breed?.nom ?? ''} ${location ? `à ${location}` : ''}`
   const portraitUrl = prismic.isFilled.image(dog_portrait) ? dog_portrait.url : null
+
+  const carouselVideos = (video_carousel ?? [])
+    .filter((item: { video_file: prismic.LinkField }) => prismic.isFilled.link(item.video_file))
+    .map((item: { video_file: prismic.LinkField; video_caption: prismic.KeyTextField }) => ({
+      url: (item.video_file as prismic.FilledLinkToMediaField).url,
+      caption: item.video_caption ?? null,
+    }))
 
   const carouselImages = (photo_carousel ?? [])
     .filter((item: { carousel_image: prismic.ImageField }) => prismic.isFilled.image(item.carousel_image))
@@ -212,6 +220,13 @@ export default async function CaseStudyPage({ params }: Props) {
             <div className="prose-custom bg-white rounded-xl p-6 shadow-sm">
               <PrismicRichText field={educator_approach_content} />
             </div>
+          </section>
+        )}
+
+        {carouselVideos.length > 0 && (
+          <section>
+            <h2 className="text-2xl font-serif font-bold text-forest-800 mb-6">Vidéos</h2>
+            <VideoCarousel videos={carouselVideos} />
           </section>
         )}
 

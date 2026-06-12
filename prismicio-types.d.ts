@@ -46,6 +46,169 @@ type ContentRelationshipFieldWithData<
 		>
 }[Exclude<TCustomType[number], string>["id"]];
 
+/**
+ * Item in *About → Valeurs (4 principes)*
+ */
+export interface AboutDocumentDataValeursItem {
+	/**
+	 * Titre field in *About → Valeurs (4 principes)*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: about.valeurs[].titre
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	titre: prismic.KeyTextField;
+	
+	/**
+	 * Texte field in *About → Valeurs (4 principes)*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: about.valeurs[].texte
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	texte: prismic.KeyTextField;
+}
+
+/**
+ * Item in *About → Parcours & Formation*
+ */
+export interface AboutDocumentDataCredentialsItem {
+	/**
+	 * Titre field in *About → Parcours & Formation*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: about.credentials[].titre
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	titre: prismic.KeyTextField;
+	
+	/**
+	 * Détail field in *About → Parcours & Formation*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: about.credentials[].detail
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	detail: prismic.KeyTextField;
+}
+
+/**
+ * Content for About documents
+ */
+interface AboutDocumentData {
+	/**
+	 * Histoire field in *About*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: about.histoire
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	histoire: prismic.RichTextField;
+	
+	/**
+	 * Citation mise en avant field in *About*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: about.citation
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	citation: prismic.KeyTextField;
+	
+	/**
+	 * Philosophie — Intro (1 ligne) field in *About*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: about.philosophie_intro
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	philosophie_intro: prismic.KeyTextField;
+	
+	/**
+	 * Philosophie — Contenu field in *About*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: about.philosophie_contenu
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	philosophie_contenu: prismic.RichTextField;
+	
+	/**
+	 * Valeurs (4 principes) field in *About*
+	 *
+	 * - **Field Type**: Group
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: about.valeurs[]
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+	 */
+	valeurs: prismic.GroupField<Simplify<AboutDocumentDataValeursItem>>;
+	
+	/**
+	 * Parcours & Formation field in *About*
+	 *
+	 * - **Field Type**: Group
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: about.credentials[]
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+	 */
+	credentials: prismic.GroupField<Simplify<AboutDocumentDataCredentialsItem>>;
+	
+	/**
+	 * CTA — Description field in *About*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: about.cta_texte
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	cta_texte: prismic.KeyTextField;/**
+	 * Meta Title field in *About*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: about.meta_title
+	 * - **Tab**: SEO & Metadata
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	meta_title: prismic.KeyTextField;
+	
+	/**
+	 * Meta Description field in *About*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: about.meta_description
+	 * - **Tab**: SEO & Metadata
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	meta_description: prismic.KeyTextField;
+}
+
+/**
+ * About document from Prismic
+ *
+ * - **API ID**: `about`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type AboutDocument<Lang extends string = string> = prismic.PrismicDocumentWithoutUID<Simplify<AboutDocumentData>, "about", Lang>;
+
 type BlogPostDocumentDataSlicesSlice = never
 
 /**
@@ -250,6 +413,31 @@ export interface CaseStudyDocumentDataPhotoCarouselItem {
 }
 
 /**
+ * Item in *Case Study → Video Carousel*
+ */
+export interface CaseStudyDocumentDataVideoCarouselItem {
+	/**
+	 * Video (MP4) field in *Case Study → Video Carousel*
+	 *
+	 * - **Field Type**: Link to Media
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: case_study.video_carousel[].video_file
+	 * - **Documentation**: https://prismic.io/docs/fields/link-to-media
+	 */
+	video_file: prismic.LinkToMediaField<prismic.FieldState, never>;
+	
+	/**
+	 * Caption field in *Case Study → Video Carousel*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: case_study.video_carousel[].video_caption
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	video_caption: prismic.KeyTextField;
+}
+
+/**
  * Content for Case Study documents
  */
 interface CaseStudyDocumentData {
@@ -267,14 +455,14 @@ interface CaseStudyDocumentData {
 	/**
 	 * Race field in *Case Study*
 	 *
-	 * - **Field Type**: Content Relationship → Race
+	 * - **Field Type**: Content Relationship
 	 * - **Placeholder**: *None*
 	 * - **API ID Path**: case_study.dog_breed
 	 * - **Tab**: Main
 	 * - **Documentation**: https://prismic.io/docs/fields/content-relationship
 	 */
-	dog_breed: prismic.ContentRelationshipField<"race">;
-
+	dog_breed: ContentRelationshipFieldWithData<[{"id":"race","fields":["nom"]}]>;
+	
 	/**
 	 * Dog Portrait field in *Case Study*
 	 *
@@ -438,7 +626,18 @@ interface CaseStudyDocumentData {
 	 * - **Tab**: Main
 	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
 	 */
-	testimonial_content: prismic.RichTextField;/**
+	testimonial_content: prismic.RichTextField;
+	
+	/**
+	 * Video Carousel field in *Case Study*
+	 *
+	 * - **Field Type**: Group
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: case_study.video_carousel[]
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+	 */
+	video_carousel: prismic.GroupField<Simplify<CaseStudyDocumentDataVideoCarouselItem>>;/**
 	 * Meta Title field in *Case Study*
 	 *
 	 * - **Field Type**: Text
@@ -702,11 +901,13 @@ interface LayoutDocumentData {
 	 * Logo field in *Layout*
 	 *
 	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
 	 * - **API ID Path**: layout.logo
 	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/image
 	 */
 	logo: prismic.ImageField<never>;
-
+	
 	/**
 	 * Site Name field in *Layout*
 	 *
@@ -817,11 +1018,46 @@ interface LayoutDocumentData {
 export type LayoutDocument<Lang extends string = string> = prismic.PrismicDocumentWithoutUID<Simplify<LayoutDocumentData>, "layout", Lang>;
 
 /**
- * Item in *Pricing → Plans*
+ * Item in *Pricing → Étapes (Comment je travaille)*
+ */
+export interface PricingDocumentDataEtapesItem {
+	/**
+	 * Numéro field in *Pricing → Étapes (Comment je travaille)*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: 01
+	 * - **API ID Path**: pricing.etapes[].num
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	num: prismic.KeyTextField;
+	
+	/**
+	 * Titre field in *Pricing → Étapes (Comment je travaille)*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: pricing.etapes[].titre
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	titre: prismic.KeyTextField;
+	
+	/**
+	 * Texte field in *Pricing → Étapes (Comment je travaille)*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: pricing.etapes[].texte
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	texte: prismic.KeyTextField;
+}
+
+/**
+ * Item in *Pricing → Plans tarifaires*
  */
 export interface PricingDocumentDataPlansItem {
 	/**
-	 * Plan Title field in *Pricing → Plans*
+	 * Plan Title field in *Pricing → Plans tarifaires*
 	 *
 	 * - **Field Type**: Text
 	 * - **Placeholder**: Cours d'essai
@@ -831,7 +1067,7 @@ export interface PricingDocumentDataPlansItem {
 	plan_title: prismic.KeyTextField;
 	
 	/**
-	 * Plan Description field in *Pricing → Plans*
+	 * Plan Description field in *Pricing → Plans tarifaires*
 	 *
 	 * - **Field Type**: Rich Text
 	 * - **Placeholder**: *None*
@@ -841,7 +1077,7 @@ export interface PricingDocumentDataPlansItem {
 	plan_description: prismic.RichTextField;
 	
 	/**
-	 * Plan Price field in *Pricing → Plans*
+	 * Plan Price field in *Pricing → Plans tarifaires*
 	 *
 	 * - **Field Type**: Text
 	 * - **Placeholder**: 60€
@@ -851,7 +1087,7 @@ export interface PricingDocumentDataPlansItem {
 	plan_price: prismic.KeyTextField;
 	
 	/**
-	 * Is Featured field in *Pricing → Plans*
+	 * Is Featured field in *Pricing → Plans tarifaires*
 	 *
 	 * - **Field Type**: Boolean
 	 * - **Placeholder**: *None*
@@ -863,25 +1099,26 @@ export interface PricingDocumentDataPlansItem {
 }
 
 /**
- * Item in *Pricing → Étapes*
- */
-export interface PricingDocumentDataEtapesItem {
-	num: prismic.KeyTextField;
-	titre: prismic.KeyTextField;
-	texte: prismic.KeyTextField;
-}
-
-/**
  * Item in *Pricing → Questions fréquentes*
  */
 export interface PricingDocumentDataFaqItem {
 	/**
 	 * Question field in *Pricing → Questions fréquentes*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: pricing.faq[].question
+	 * - **Documentation**: https://prismic.io/docs/fields/text
 	 */
 	question: prismic.KeyTextField;
-
+	
 	/**
 	 * Réponse field in *Pricing → Questions fréquentes*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: pricing.faq[].reponse
+	 * - **Documentation**: https://prismic.io/docs/fields/text
 	 */
 	reponse: prismic.KeyTextField;
 }
@@ -913,7 +1150,51 @@ interface PricingDocumentData {
 	description: prismic.RichTextField;
 	
 	/**
-	 * Plans field in *Pricing*
+	 * Méthode — Sous-titre field in *Pricing*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: pricing.methode_intro
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	methode_intro: prismic.KeyTextField;
+	
+	/**
+	 * Étapes (Comment je travaille) field in *Pricing*
+	 *
+	 * - **Field Type**: Group
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: pricing.etapes[]
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+	 */
+	etapes: prismic.GroupField<Simplify<PricingDocumentDataEtapesItem>>;
+	
+	/**
+	 * Balades collectives — Titre field in *Pricing*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: pricing.balades_titre
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	balades_titre: prismic.KeyTextField;
+	
+	/**
+	 * Balades collectives — Texte field in *Pricing*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: pricing.balades_texte
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	balades_texte: prismic.KeyTextField;
+	
+	/**
+	 * Plans tarifaires field in *Pricing*
 	 *
 	 * - **Field Type**: Group
 	 * - **Placeholder**: *None*
@@ -921,18 +1202,14 @@ interface PricingDocumentData {
 	 * - **Tab**: Main
 	 * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
 	 */
-	methode_intro: prismic.KeyTextField;
-	etapes: prismic.GroupField<Simplify<PricingDocumentDataEtapesItem>>;
-	balades_titre: prismic.KeyTextField;
-	balades_texte: prismic.KeyTextField;
-	plans: prismic.GroupField<Simplify<PricingDocumentDataPlansItem>>;
-
-	/**
-	 * FAQ field in *Pricing*
+	plans: prismic.GroupField<Simplify<PricingDocumentDataPlansItem>>;/**
+	 * Questions fréquentes field in *Pricing*
 	 *
 	 * - **Field Type**: Group
+	 * - **Placeholder**: *None*
 	 * - **API ID Path**: pricing.faq[]
 	 * - **Tab**: Q&A
+	 * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
 	 */
 	faq: prismic.GroupField<Simplify<PricingDocumentDataFaqItem>>;/**
 	 * Meta Title field in *Pricing*
@@ -967,6 +1244,245 @@ interface PricingDocumentData {
  * @typeParam Lang - Language API ID of the document.
  */
 export type PricingDocument<Lang extends string = string> = prismic.PrismicDocumentWithoutUID<Simplify<PricingDocumentData>, "pricing", Lang>;
+
+/**
+ * Item in *Race → FAQ*
+ */
+export interface RaceDocumentDataFaqItem {
+	/**
+	 * Question field in *Race → FAQ*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: race.faq[].question
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	question: prismic.KeyTextField;
+	
+	/**
+	 * Réponse field in *Race → FAQ*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: race.faq[].reponse
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	reponse: prismic.RichTextField;
+}
+
+/**
+ * Content for Race documents
+ */
+interface RaceDocumentData {
+	/**
+	 * Nom de la race field in *Race*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: race.nom
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	nom: prismic.KeyTextField;
+	
+	/**
+	 * Photo field in *Race*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: race.photo
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/image
+	 */
+	photo: prismic.ImageField<never>;
+	
+	/**
+	 * Description field in *Race*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: race.description
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	description: prismic.RichTextField;
+	
+	/**
+	 * FAQ field in *Race*
+	 *
+	 * - **Field Type**: Group
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: race.faq[]
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+	 */
+	faq: prismic.GroupField<Simplify<RaceDocumentDataFaqItem>>;/**
+	 * Meta Title field in *Race*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: A title of the page used for social media and search engines
+	 * - **API ID Path**: race.meta_title
+	 * - **Tab**: SEO & Metadata
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	meta_title: prismic.KeyTextField;
+	
+	/**
+	 * Meta Description field in *Race*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: A brief summary of the page
+	 * - **API ID Path**: race.meta_description
+	 * - **Tab**: SEO & Metadata
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	meta_description: prismic.KeyTextField;
+	
+	/**
+	 * Meta Image field in *Race*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: race.meta_image
+	 * - **Tab**: SEO & Metadata
+	 * - **Documentation**: https://prismic.io/docs/fields/image
+	 */
+	meta_image: prismic.ImageField<never>;
+}
+
+/**
+ * Race document from Prismic
+ *
+ * - **API ID**: `race`
+ * - **Repeatable**: `true`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type RaceDocument<Lang extends string = string> = prismic.PrismicDocumentWithUID<Simplify<RaceDocumentData>, "race", Lang>;
+
+/**
+ * Item in *Recommandations → Avis clients*
+ */
+export interface RecommandationsDocumentDataReviewsItem {
+	/**
+	 * Nom du client field in *Recommandations → Avis clients*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: recommandations.reviews[].name
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	name: prismic.KeyTextField;
+	
+	/**
+	 * Nom du chien (optionnel) field in *Recommandations → Avis clients*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: recommandations.reviews[].dog_name
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	dog_name: prismic.KeyTextField;
+	
+	/**
+	 * Date (affichage) field in *Recommandations → Avis clients*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Mars 2026
+	 * - **API ID Path**: recommandations.reviews[].date
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	date: prismic.KeyTextField;
+	
+	/**
+	 * Date (tri AAAA-MM) field in *Recommandations → Avis clients*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: 2026-03
+	 * - **API ID Path**: recommandations.reviews[].sort_date
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	sort_date: prismic.KeyTextField;
+	
+	/**
+	 * Texte de l'avis field in *Recommandations → Avis clients*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: recommandations.reviews[].text
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	text: prismic.RichTextField;
+	
+	/**
+	 * Réponse de Marie-Anne (optionnel) field in *Recommandations → Avis clients*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: recommandations.reviews[].response
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	response: prismic.RichTextField;
+}
+
+/**
+ * Content for Recommandations documents
+ */
+interface RecommandationsDocumentData {
+	/**
+	 * Lien Google (bouton Lire sur Google) field in *Recommandations*
+	 *
+	 * - **Field Type**: Link
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: recommandations.google_url
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/link
+	 */
+	google_url: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+	
+	/**
+	 * Avis clients field in *Recommandations*
+	 *
+	 * - **Field Type**: Group
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: recommandations.reviews[]
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+	 */
+	reviews: prismic.GroupField<Simplify<RecommandationsDocumentDataReviewsItem>>;/**
+	 * Meta Title field in *Recommandations*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: recommandations.meta_title
+	 * - **Tab**: SEO & Metadata
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	meta_title: prismic.KeyTextField;
+	
+	/**
+	 * Meta Description field in *Recommandations*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: recommandations.meta_description
+	 * - **Tab**: SEO & Metadata
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	meta_description: prismic.KeyTextField;
+}
+
+/**
+ * Recommandations document from Prismic
+ *
+ * - **API ID**: `recommandations`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type RecommandationsDocument<Lang extends string = string> = prismic.PrismicDocumentWithoutUID<Simplify<RecommandationsDocumentData>, "recommandations", Lang>;
 
 /**
  * Content for Reservation documents
@@ -1081,202 +1597,7 @@ interface ReservationDocumentData {
  */
 export type ReservationDocument<Lang extends string = string> = prismic.PrismicDocumentWithoutUID<Simplify<ReservationDocumentData>, "reservation", Lang>;
 
-/**
- * Item in *Race → FAQ*
- */
-export interface RaceDocumentDataFaqItem {
-	/**
-	 * Question field in *Race → FAQ*
-	 *
-	 * - **Field Type**: Text
-	 * - **Placeholder**: *None*
-	 * - **API ID Path**: race.faq[].question
-	 * - **Documentation**: https://prismic.io/docs/fields/text
-	 */
-	question: prismic.KeyTextField;
-
-	/**
-	 * Réponse field in *Race → FAQ*
-	 *
-	 * - **Field Type**: Rich Text
-	 * - **Placeholder**: *None*
-	 * - **API ID Path**: race.faq[].reponse
-	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
-	 */
-	reponse: prismic.RichTextField;
-}
-
-/**
- * Content for Race documents
- */
-interface RaceDocumentData {
-	/**
-	 * Nom de la race field in *Race*
-	 *
-	 * - **Field Type**: Text
-	 * - **API ID Path**: race.nom
-	 * - **Tab**: Main
-	 */
-	nom: prismic.KeyTextField;
-
-	/**
-	 * Photo field in *Race*
-	 *
-	 * - **Field Type**: Image
-	 * - **API ID Path**: race.photo
-	 * - **Tab**: Main
-	 */
-	photo: prismic.ImageField<never>;
-
-	/**
-	 * Description field in *Race*
-	 *
-	 * - **Field Type**: Rich Text
-	 * - **API ID Path**: race.description
-	 * - **Tab**: Main
-	 */
-	description: prismic.RichTextField;
-
-	/**
-	 * FAQ field in *Race*
-	 *
-	 * - **Field Type**: Group
-	 * - **API ID Path**: race.faq[]
-	 * - **Tab**: Main
-	 */
-	faq: prismic.GroupField<Simplify<RaceDocumentDataFaqItem>>;
-
-	/**
-	 * Meta Title field in *Race*
-	 *
-	 * - **Field Type**: Text
-	 * - **API ID Path**: race.meta_title
-	 * - **Tab**: SEO & Metadata
-	 */
-	meta_title: prismic.KeyTextField;
-
-	/**
-	 * Meta Description field in *Race*
-	 *
-	 * - **Field Type**: Text
-	 * - **API ID Path**: race.meta_description
-	 * - **Tab**: SEO & Metadata
-	 */
-	meta_description: prismic.KeyTextField;
-
-	/**
-	 * Meta Image field in *Race*
-	 *
-	 * - **Field Type**: Image
-	 * - **API ID Path**: race.meta_image
-	 * - **Tab**: SEO & Metadata
-	 */
-	meta_image: prismic.ImageField<never>;
-}
-
-/**
- * Race document from Prismic
- *
- * - **API ID**: `race`
- * - **Repeatable**: `true`
- * - **Documentation**: https://prismic.io/docs/content-modeling
- *
- * @typeParam Lang - Language API ID of the document.
- */
-export type RaceDocument<Lang extends string = string> = prismic.PrismicDocumentWithUID<Simplify<RaceDocumentData>, "race", Lang>;
-
-/**
- * Item in *About → Valeurs*
- */
-export interface AboutDocumentDataValeursItem {
-	titre: prismic.KeyTextField;
-	texte: prismic.KeyTextField;
-}
-
-/**
- * Item in *About → Parcours & Formation*
- */
-export interface AboutDocumentDataCredentialsItem {
-	titre: prismic.KeyTextField;
-	detail: prismic.KeyTextField;
-}
-
-/**
- * Content for About documents
- */
-interface AboutDocumentData {
-	histoire: prismic.RichTextField;
-	citation: prismic.KeyTextField;
-	philosophie_intro: prismic.KeyTextField;
-	philosophie_contenu: prismic.RichTextField;
-	valeurs: prismic.GroupField<Simplify<AboutDocumentDataValeursItem>>;
-	credentials: prismic.GroupField<Simplify<AboutDocumentDataCredentialsItem>>;
-	cta_texte: prismic.KeyTextField;
-	meta_title: prismic.KeyTextField;
-	meta_description: prismic.KeyTextField;
-}
-
-/**
- * About document from Prismic
- *
- * - **API ID**: `about`
- * - **Repeatable**: `false`
- * - **Documentation**: https://prismic.io/docs/content-modeling
- */
-export type AboutDocument<Lang extends string = string> = prismic.PrismicDocumentWithoutUID<Simplify<AboutDocumentData>, "about", Lang>;
-
-/**
- * Item in *Recommandations → Avis clients*
- */
-export interface RecommandationsDocumentDataReviewsItem {
-	name: prismic.KeyTextField;
-	dog_name: prismic.KeyTextField;
-	date: prismic.KeyTextField;
-	sort_date: prismic.KeyTextField;
-	text: prismic.RichTextField;
-	response: prismic.RichTextField;
-}
-
-/**
- * Content for Recommandations documents
- */
-interface RecommandationsDocumentData {
-	google_url: prismic.LinkField;
-	reviews: prismic.GroupField<Simplify<RecommandationsDocumentDataReviewsItem>>;
-	meta_title: prismic.KeyTextField;
-	meta_description: prismic.KeyTextField;
-}
-
-/**
- * Recommandations document from Prismic
- *
- * - **API ID**: `recommandations`
- * - **Repeatable**: `false`
- */
-export type RecommandationsDocument<Lang extends string = string> = prismic.PrismicDocumentWithoutUID<Simplify<RecommandationsDocumentData>, "recommandations", Lang>;
-
 export type AllDocumentTypes = AboutDocument | BlogPostDocument | CaseStudyDocument | CityPageDocument | HomepageDocument | LayoutDocument | PricingDocument | RaceDocument | RecommandationsDocument | ReservationDocument;
-
-/**
- * Primary content in *FAQ Section → Default → Primary*
- */
-export interface FaqSectionSliceDefaultPrimary {
-	titre: prismic.KeyTextField;
-}
-
-/**
- * Item in *FAQ Section → Default → Items*
- */
-export interface FaqSectionSliceDefaultItem {
-	question: prismic.KeyTextField;
-	reponse: prismic.KeyTextField;
-}
-
-export type FaqSectionSliceDefault = prismic.SharedSliceVariation<"default", Simplify<FaqSectionSliceDefaultPrimary>, Simplify<FaqSectionSliceDefaultItem>>;
-
-type FaqSectionSliceVariation = FaqSectionSliceDefault;
-
-export type FaqSectionSlice = prismic.SharedSlice<"faq_section", FaqSectionSliceVariation>;
 
 /**
  * Primary content in *Content → Default → Primary*
@@ -1528,6 +1849,69 @@ type EducatorPresentationSliceVariation = EducatorPresentationSliceDefault
 export type EducatorPresentationSlice = prismic.SharedSlice<"educator_presentation", EducatorPresentationSliceVariation>;
 
 /**
+ * Primary content in *FaqSection → Default → Primary*
+ */
+export interface FaqSectionSliceDefaultPrimary {
+	/**
+	 * Titre de la section field in *FaqSection → Default → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Questions fréquentes
+	 * - **API ID Path**: faq_section.default.primary.titre
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	titre: prismic.KeyTextField;
+}
+
+/**
+ * Primary content in *FaqSection → Items*
+ */
+export interface FaqSectionSliceDefaultItem {
+	/**
+	 * Question field in *FaqSection → Items*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: faq_section.items[].question
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	question: prismic.KeyTextField;
+	
+	/**
+	 * Réponse field in *FaqSection → Items*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: faq_section.items[].reponse
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	reponse: prismic.KeyTextField;
+}
+
+/**
+ * Default variation for FaqSection Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type FaqSectionSliceDefault = prismic.SharedSliceVariation<"default", Simplify<FaqSectionSliceDefaultPrimary>, Simplify<FaqSectionSliceDefaultItem>>;
+
+/**
+ * Slice variation for *FaqSection*
+ */
+type FaqSectionSliceVariation = FaqSectionSliceDefault
+
+/**
+ * FaqSection Shared Slice
+ *
+ * - **API ID**: `faq_section`
+ * - **Description**: Section de questions fréquentes avec accordéon
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type FaqSectionSlice = prismic.SharedSlice<"faq_section", FaqSectionSliceVariation>;
+
+/**
  * Primary content in *Featured Case Studies → Default → Primary*
  */
 export interface FeaturedCaseStudiesSliceDefaultPrimary {
@@ -1760,10 +2144,10 @@ declare module "@prismicio/client" {
 	namespace Content {
 		export type {
 			AboutDocument,
-				AboutDocumentData,
-				AboutDocumentDataValeursItem,
-				AboutDocumentDataCredentialsItem,
-				BlogPostDocument,
+			AboutDocumentData,
+			AboutDocumentDataValeursItem,
+			AboutDocumentDataCredentialsItem,
+			BlogPostDocument,
 			BlogPostDocumentData,
 			BlogPostDocumentDataSlicesSlice,
 			BlogPostDocumentDataTagsItem,
@@ -1771,6 +2155,7 @@ declare module "@prismicio/client" {
 			CaseStudyDocument,
 			CaseStudyDocumentData,
 			CaseStudyDocumentDataPhotoCarouselItem,
+			CaseStudyDocumentDataVideoCarouselItem,
 			CityPageDocument,
 			CityPageDocumentData,
 			CityPageDocumentDataSlicesSlice,
@@ -1782,21 +2167,19 @@ declare module "@prismicio/client" {
 			LayoutDocumentDataNavigationLinksItem,
 			PricingDocument,
 			PricingDocumentData,
-			PricingDocumentDataPlansItem,
 			PricingDocumentDataEtapesItem,
+			PricingDocumentDataPlansItem,
 			PricingDocumentDataFaqItem,
-			ReservationDocument,
-			ReservationDocumentData,
 			RaceDocument,
 			RaceDocumentData,
 			RaceDocumentDataFaqItem,
+			RecommandationsDocument,
+			RecommandationsDocumentData,
+			RecommandationsDocumentDataReviewsItem,
+			ReservationDocument,
+			ReservationDocumentData,
 			AllDocumentTypes,
-			FaqSectionSlice,
-				FaqSectionSliceDefault,
-				FaqSectionSliceDefaultPrimary,
-				FaqSectionSliceDefaultItem,
-				FaqSectionSliceVariation,
-				ContentSlice,
+			ContentSlice,
 			ContentSliceDefaultPrimary,
 			ContentSliceVariation,
 			ContentSliceDefault,
@@ -1809,6 +2192,11 @@ declare module "@prismicio/client" {
 			EducatorPresentationSliceDefaultItem,
 			EducatorPresentationSliceVariation,
 			EducatorPresentationSliceDefault,
+			FaqSectionSlice,
+			FaqSectionSliceDefaultPrimary,
+			FaqSectionSliceDefaultItem,
+			FaqSectionSliceVariation,
+			FaqSectionSliceDefault,
 			FeaturedCaseStudiesSlice,
 			FeaturedCaseStudiesSliceDefaultPrimary,
 			FeaturedCaseStudiesSliceDefaultItem,
