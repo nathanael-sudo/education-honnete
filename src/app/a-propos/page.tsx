@@ -50,8 +50,6 @@ export default async function AProposPage() {
       url: item.mosaic_image.url!,
       alt: item.mosaic_image.alt ?? null,
       caption: item.mosaic_caption ?? null,
-      width: item.mosaic_image.dimensions!.width,
-      height: item.mosaic_image.dimensions!.height,
     }))
 
   return (
