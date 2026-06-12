@@ -7,7 +7,12 @@ type CarouselImage = {
   url: string
   alt: string | null
   caption: string | null
+  width: number
+  height: number
 }
+
+const FIXED_HEIGHT = 420
+const MAX_WIDTH = 720
 
 export default function PhotoCarousel({ images }: { images: CarouselImage[] }) {
   const [current, setCurrent] = useState(0)
@@ -16,15 +21,23 @@ export default function PhotoCarousel({ images }: { images: CarouselImage[] }) {
   const prev = () => setCurrent((c) => (c - 1 + images.length) % images.length)
   const next = () => setCurrent((c) => (c + 1) % images.length)
 
+  const img = images[current]
+  const displayWidth = Math.min(MAX_WIDTH, Math.round(FIXED_HEIGHT * (img.width / img.height)))
+
   return (
-    <div className="relative">
-      <div className="relative aspect-[16/9] rounded-2xl overflow-hidden bg-forest-100 shadow-lg">
+    <div className="flex flex-col items-center">
+      {/* Image frame — fixed height, natural-ratio width */}
+      <div
+        className="relative rounded-2xl overflow-hidden bg-forest-100 shadow-lg"
+        style={{ height: FIXED_HEIGHT, width: displayWidth }}
+      >
         <Image
-          src={images[current].url}
-          alt={images[current].alt ?? images[current].caption ?? ''}
+          key={img.url}
+          src={img.url}
+          alt={img.alt ?? img.caption ?? ''}
           fill
           className="object-cover transition-opacity duration-300"
-          sizes="(max-width: 768px) 100vw, 80vw"
+          sizes="(max-width: 768px) 100vw, 720px"
         />
 
         {images.length > 1 && (
@@ -51,8 +64,8 @@ export default function PhotoCarousel({ images }: { images: CarouselImage[] }) {
         )}
       </div>
 
-      {images[current].caption && (
-        <p className="text-center text-sm text-gray-500 mt-3 italic">{images[current].caption}</p>
+      {img.caption && (
+        <p className="text-center text-sm text-gray-500 mt-3 italic">{img.caption}</p>
       )}
 
       {images.length > 1 && (

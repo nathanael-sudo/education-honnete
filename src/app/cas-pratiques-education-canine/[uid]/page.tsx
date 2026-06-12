@@ -115,6 +115,8 @@ export default async function CaseStudyPage({ params }: Props) {
       url: item.carousel_image.url!,
       alt: item.carousel_image.alt ?? null,
       caption: item.image_caption ?? null,
+      width: item.carousel_image.dimensions!.width,
+      height: item.carousel_image.dimensions!.height,
     }))
 
   return (
