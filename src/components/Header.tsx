@@ -62,6 +62,9 @@ export default function Header({ layout, cityPages = [] }: { layout: LayoutDoc; 
 
           {/* Desktop nav */}
           <nav className="hidden md:flex items-center gap-6">
+            <Link href="/" className="text-sm font-medium text-gray-600 hover:text-forest-700 transition-colors">
+              Accueil
+            </Link>
             {navigation_links
               .filter((item) => ![`/`, '/reservation'].includes(resolveLink(item.link)))
               .map((item) => {
@@ -140,6 +143,9 @@ export default function Header({ layout, cityPages = [] }: { layout: LayoutDoc; 
       {open && (
         <div className="md:hidden border-t border-gray-100 bg-white px-4 pb-4">
           <nav className="flex flex-col gap-1 pt-3">
+            <Link href="/" className="py-2 text-sm font-medium text-gray-700 hover:text-forest-700" onClick={() => setOpen(false)}>
+              Accueil
+            </Link>
             {navigation_links
               .filter((item) => ![`/`, '/reservation'].includes(resolveLink(item.link)))
               .map((item) => {
