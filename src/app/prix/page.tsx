@@ -51,7 +51,7 @@ const DEFAULT_FAQ = [
 export default async function PrixPage() {
   const client = createClient()
   const page = await client.getSingle('pricing')
-  const { title, description, methode_intro, etapes, balades_titre, balades_texte, plans, faq } = page.data
+  const { title, description, methode_intro, etapes, balades_titre, balades_texte, plans, tarifs_note, cta_titre, cta_texte, cta_bouton, faq } = page.data
 
   const steps = (etapes ?? []).filter((e: { num: string | null; titre: string | null; texte: string | null }) => e.titre)
   const stepsToShow = steps.length > 0 ? steps : DEFAULT_STEPS
@@ -165,18 +165,23 @@ export default async function PrixPage() {
           })}
         </div>
 
-        <p className="text-center text-sm text-gray-500 mt-10">
-          Tous les cours se déroulent à domicile ou dans un lieu adapté près de chez vous.
-          Frais de déplacement inclus dans le secteur de Coutançais et Granvillais.
-        </p>
+        {(tarifs_note ?? 'Tous les cours se déroulent à domicile ou dans un lieu adapté près de chez vous. Frais de déplacement inclus dans le secteur de Coutançais et Granvillais.') && (
+          <p className="text-center text-sm text-gray-500 mt-10">
+            {tarifs_note ?? 'Tous les cours se déroulent à domicile ou dans un lieu adapté près de chez vous. Frais de déplacement inclus dans le secteur de Coutançais et Granvillais.'}
+          </p>
+        )}
       </div>
 
       {/* CTA strip */}
       <div className="bg-amber-light py-12 px-4 text-center">
-        <h2 className="text-2xl font-serif font-bold text-forest-800 mb-2">Une question sur les tarifs ou la méthode ?</h2>
-        <p className="text-gray-600 mb-6">{"N'hésitez pas à me contacter directement — je réponds à toutes les questions avant de prendre rendez-vous."}</p>
+        <h2 className="text-2xl font-serif font-bold text-forest-800 mb-2">
+          {cta_titre ?? 'Une question sur les tarifs ou la méthode ?'}
+        </h2>
+        <p className="text-gray-600 mb-6">
+          {cta_texte ?? "N'hésitez pas à me contacter directement — je réponds à toutes les questions avant de prendre rendez-vous."}
+        </p>
         <Link href="/reservation" className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-forest-700 text-white font-semibold hover:bg-forest-800 transition-colors">
-          Me contacter
+          {cta_bouton ?? 'Me contacter'}
           <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
           </svg>

@@ -104,6 +104,30 @@
             }
           }
         }
+      },
+      "tarifs_note": {
+        "type": "Text",
+        "config": {
+          "label": "Tarifs — Note de bas de page"
+        }
+      },
+      "cta_titre": {
+        "type": "Text",
+        "config": {
+          "label": "CTA — Titre"
+        }
+      },
+      "cta_texte": {
+        "type": "Text",
+        "config": {
+          "label": "CTA — Texte"
+        }
+      },
+      "cta_bouton": {
+        "type": "Text",
+        "config": {
+          "label": "CTA — Libellé du bouton"
+        }
       }
     },
     "Q&A": {

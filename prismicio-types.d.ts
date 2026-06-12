@@ -1202,7 +1202,51 @@ interface PricingDocumentData {
 	 * - **Tab**: Main
 	 * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
 	 */
-	plans: prismic.GroupField<Simplify<PricingDocumentDataPlansItem>>;/**
+	plans: prismic.GroupField<Simplify<PricingDocumentDataPlansItem>>;
+	
+	/**
+	 * Tarifs — Note de bas de page field in *Pricing*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: pricing.tarifs_note
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	tarifs_note: prismic.KeyTextField;
+	
+	/**
+	 * CTA — Titre field in *Pricing*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: pricing.cta_titre
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	cta_titre: prismic.KeyTextField;
+	
+	/**
+	 * CTA — Texte field in *Pricing*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: pricing.cta_texte
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	cta_texte: prismic.KeyTextField;
+	
+	/**
+	 * CTA — Libellé du bouton field in *Pricing*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: pricing.cta_bouton
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	cta_bouton: prismic.KeyTextField;/**
 	 * Questions fréquentes field in *Pricing*
 	 *
 	 * - **Field Type**: Group
